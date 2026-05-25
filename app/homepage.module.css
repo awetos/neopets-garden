@@ -1,0 +1,12 @@
+.test-div {
+  background-color: olive;
+  height: 100px;
+  width: 100px;
+}
+
+.colorful-div {
+  background-color: var(--color-foreground);
+  color: var(--color-background);
+  height: 100px;
+  width: 100px;
+}
