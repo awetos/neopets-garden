@@ -1,0 +1,16 @@
+.navbutton {
+  display: flex;
+
+  cursor: pointer;
+  width: 150px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+
+  height: 100%;
+  background-color: var(--color-amber-500);
+}
+
+.navbutton:hover {
+  background-color: var(--color-amber-600);
+}

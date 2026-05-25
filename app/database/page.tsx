@@ -12,7 +12,9 @@ export default function () {
       <div>
         {" "}
         I'm on a page, and a function has ran. Today is: {datestr}. Tomorrow
-        will be {tomorrowstr};
+        will be {tomorrowstr}; On this page you should be able to sort by seed
+        type, sort by most commonly dropped, and filter out (gardening / food /
+        paint brushes / other)
       </div>
     </>
   );
