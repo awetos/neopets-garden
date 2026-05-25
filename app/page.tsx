@@ -2,6 +2,7 @@ import Image from "next/image";
 import classes from "./homepage.module.css";
 import Link from "next/link";
 import { seeds } from "@/types/seeds";
+import SubmissionForm from "@/components/submission-form/submission-form";
 
 export default function Home() {
   return (
@@ -13,21 +14,12 @@ export default function Home() {
           in the future I can make a database for A crowd sourced database for
           results of the gardening on Neopets-Classic.
         </div>
-        <div className="flex w-full max-w-3xl flex-row flex-wrap justify-center">
-          {seeds.map((seed) => {
-            return (
-              <div key={seed.name}>
-                <Image
-                  src={seed.path}
-                  alt={seed.name}
-                  height={75}
-                  width={75}
-                ></Image>
-              </div>
-            );
-          })}
+        <div></div>
+        <div className="w-full border-amber-300 bg-amber-300 text-center font-bold">
+          Submit your result
         </div>
-        <div className="w-full border-amber-300 bg-amber-600">
+        <SubmissionForm></SubmissionForm>
+        <div className="w-full border-amber-300 bg-amber-300">
           {" "}
           Latest Submissions...
         </div>
