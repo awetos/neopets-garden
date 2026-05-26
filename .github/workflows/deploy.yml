@@ -26,6 +26,13 @@ jobs:
           npm ci
           npm run build
 
+      - name: Debug generated files
+        run: |
+            node -v
+            npm -v
+            find out/_next/static/chunks -maxdepth 1 -type f -print
+            find out -name '*..css' -print
+
       - name: Deploy to Neocities
         uses: bcomnes/deploy-to-neocities@v3
         with:
