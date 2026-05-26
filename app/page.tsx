@@ -2,7 +2,6 @@ import Image from "next/image";
 import classes from "./homepage.module.css";
 import Link from "next/link";
 import { seeds } from "@/types/seeds";
-import SubmissionForm from "@/components/submission-form/submission-form";
 
 export default function Home() {
   return (
