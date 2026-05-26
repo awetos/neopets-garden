@@ -62,7 +62,6 @@ export default function SubmissionForm() {
         )}
       </div>
 
-      <SelectCategory register={form.register} errors={form.formState.errors} />
       <button className="cursor-pointer bg-amber-300" type="submit">
         Submit
       </button>
