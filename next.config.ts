@@ -5,7 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
   /* config options here */
 };
 

@@ -18,7 +18,6 @@ export default function Home() {
         <div className="w-full border-amber-300 bg-amber-300 text-center font-bold">
           Submit your result
         </div>
-        <SubmissionForm></SubmissionForm>
         <div className="w-full border-amber-300 bg-amber-300">
           {" "}
           Latest Submissions...
