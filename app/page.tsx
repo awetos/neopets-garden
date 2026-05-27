@@ -2,6 +2,7 @@ import Image from "next/image";
 import classes from "./homepage.module.css";
 import Link from "next/link";
 import { seeds } from "@/types/seeds";
+import SubmissionForm from "@/components/submission-form/submission-form";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <div></div>
         <div className="w-full border-amber-300 bg-amber-300 text-center font-bold">
           Submit your result
+          <SubmissionForm></SubmissionForm>
         </div>
         <div className="w-full border-amber-300 bg-amber-300">
           {" "}

@@ -23,5 +23,4 @@ export const gardenResultSchema = z.object({
   fertilizerUse: z.string().optional(),
   rareItemBuffRate: z.number().optional(),
 });
-
 export type GardenResult = z.infer<typeof gardenResultSchema>;
