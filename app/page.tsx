@@ -21,7 +21,7 @@ export default function Home() {
             tracked among any other variables that might affect the outcomes.
           </p>
         </div>
-        <div className="w-full bg-amber-200 text-center font-bold">
+        <div className="w-full bg-amber-200 pt-2 text-center font-bold">
           Submit your result
           <div className="mx-2 my-2 border-b-2 border-amber-500"></div>
           <SubmissionForm></SubmissionForm>
