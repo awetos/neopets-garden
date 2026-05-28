@@ -9,6 +9,7 @@ import classes from "@/components/submission-form/submission-form.module.css";
 import { categories, seedNames } from "@/types/garden-result";
 import { uploadToFirebase } from "./firebase-client";
 import { FirebaseError } from "firebase/app";
+import { redirect } from "next/navigation";
 const GardenSubmissionSchema = z.object({
   seed: z.enum(seedNames, "You must select a seed"),
   item: z
@@ -65,9 +66,9 @@ export default function SubmissionForm() {
     }
 
     setHasSubmitted(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     reset();
-    return { success: true };
+    redirect("/");
   };
   return (
     <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>

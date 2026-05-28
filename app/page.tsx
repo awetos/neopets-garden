@@ -3,6 +3,7 @@ import classes from "./homepage.module.css";
 import Link from "next/link";
 import { seeds } from "@/types/seeds";
 import SubmissionForm from "@/components/submission-form/submission-form";
+import LatestTable from "@/components/latest-table/latest-table";
 
 export default function Home() {
   return (
@@ -26,7 +27,10 @@ export default function Home() {
           <div className="mx-2 my-2 border-b-2 border-amber-500"></div>
           <SubmissionForm></SubmissionForm>
         </div>
-        <div className="my-4 w-full bg-amber-200">Latest Submissions...</div>
+        <div className="my-4 w-full bg-amber-200">
+          Latest Submissions...
+          <LatestTable></LatestTable>
+        </div>
       </div>
     </>
   );

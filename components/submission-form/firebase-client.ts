@@ -39,3 +39,5 @@ export const uploadToFirebase = async (data: GardenSubmission) => {
     createdAt: serverTimestamp(),
   });
 };
+
+export const getLatestSubmissions = async () => {};
