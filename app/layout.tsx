@@ -37,7 +37,7 @@ export default function RootLayout({
             className={`py-large md:px-large mt-0 bg-amber-50 px-0 sm:w-full md:mx-auto md:my-2 md:w-3xl md:border-2 md:border-amber-300`}
           >
             <main>{children}</main>
-          </div>{" "}
+          </div>
           <Footer></Footer>
         </div>
       </body>
