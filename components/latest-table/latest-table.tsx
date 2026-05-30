@@ -2,7 +2,7 @@
 import { getLatestSubmissions } from "@/firebase/get-latest-submissions";
 import { GardenResult } from "@/types/garden-result";
 import { formatDistanceStrict } from "date-fns";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
@@ -27,41 +27,43 @@ export default function LatestTable() {
   }, [refreshKey]);
   console.log(latestData);
   return (
-    <div>
-      <table className="w-full">
-        <colgroup>
-          <col className="w-2/7" />
-          <col className="w-4/7" />
-          <col className="w-1/7" />
-        </colgroup>
-        <thead>
-          <tr>
-            <th>Seed</th>
-            <th>Item</th>
-            <th>Timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {latestData.length < 1 && (
+    <Suspense fallback={<p>Loading latest submissions...</p>}>
+      <div>
+        <table className="w-full">
+          <colgroup>
+            <col className="w-2/7" />
+            <col className="w-4/7" />
+            <col className="w-1/7" />
+          </colgroup>
+          <thead>
             <tr>
-              <td colSpan={3} className="py-2 text-center">
-                There are no submissions
-              </td>
+              <th>Seed</th>
+              <th>Item</th>
+              <th>Timestamp</th>
             </tr>
-          )}
-          {latestData.map((data, index) => {
-            return (
-              <tr key={index}>
-                <td>{data.seed}</td>
-                <td>{data.item}</td>
-                <td>
-                  {formatDistanceStrict(Date.now(), data.createdAt.toDate())}
+          </thead>
+          <tbody>
+            {latestData.length < 1 && (
+              <tr>
+                <td colSpan={3} className="py-2 text-center">
+                  There are no submissions
                 </td>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            )}
+            {latestData.map((data, index) => {
+              return (
+                <tr key={index}>
+                  <td>{data.seed}</td>
+                  <td>{data.item}</td>
+                  <td>
+                    {formatDistanceStrict(Date.now(), data.createdAt.toDate())}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </Suspense>
   );
 }
