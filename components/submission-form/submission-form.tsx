@@ -10,6 +10,10 @@ import { categories, seedNames } from "@/types/garden-result";
 import { uploadToFirebase } from "@/firebase/upload-submission";
 import { FirebaseError } from "firebase/app";
 import { redirect } from "next/navigation";
+import { refresh } from "next/cache";
+
+import { useRouter } from "next/navigation";
+
 const GardenSubmissionSchema = z.object({
   seed: z.enum(seedNames, "You must select a seed"),
   item: z
@@ -47,6 +51,7 @@ export default function SubmissionForm() {
   const [currentSeed, setCurrentSeed] = useState<string>();
   const [hasSubmitted, setHasSubmitted] = useState<true | false>(false);
   const onSubmit: SubmitHandler<GardenSubmission> = async (data) => {
+    const router = useRouter();
     console.log("SUBMIT START", data);
     const result = GardenSubmissionSchema.safeParse(data);
 
@@ -68,7 +73,8 @@ export default function SubmissionForm() {
     setHasSubmitted(true);
     await new Promise((resolve) => setTimeout(resolve, 500));
     reset();
-    redirect("/");
+    router.push("/");
+    router.refresh();
   };
   return (
     <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>
