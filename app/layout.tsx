@@ -33,12 +33,12 @@ export default function RootLayout({
       <body>
         <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-amber-100">
           <Navbar></Navbar>
-          <div className={`py-large`}>
+          <div
+            className={`p-large mx-auto w-full bg-amber-50 md:my-2 md:max-w-3xl md:border-2 md:border-amber-300`}
+          >
             <main>{children}</main>
           </div>
-          <div className="bg-amber-400">
-            <p>Yay I'm a footer! Send me shit on Neopets!</p>
-          </div>
+          <Footer />
         </div>
       </body>
     </html>
