@@ -1,5 +1,6 @@
 import SubmissionForm from "@/components/submission-form/submission-form";
 import LatestTable from "@/components/latest-table/latest-table";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -25,7 +26,9 @@ export default function Home() {
         </div>
         <div className="my-4 w-full bg-amber-200">
           <div className="text-center text-sm">Latest Submissions...</div>
-          <LatestTable></LatestTable>
+          <Suspense fallback={<p>Loading latest submissions...</p>}>
+            <LatestTable></LatestTable>
+          </Suspense>
         </div>
       </div>
     </>
