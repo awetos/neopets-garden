@@ -25,6 +25,7 @@ const GardenSubmissionSchema = z.object({
 export type GardenSubmission = z.input<typeof GardenSubmissionSchema>;
 
 export default function SubmissionForm() {
+  const router = useRouter();
   //handleSubmit comes from form and prevents default
   const {
     register,
@@ -51,7 +52,6 @@ export default function SubmissionForm() {
   const [currentSeed, setCurrentSeed] = useState<string>();
   const [hasSubmitted, setHasSubmitted] = useState<true | false>(false);
   const onSubmit: SubmitHandler<GardenSubmission> = async (data) => {
-    const router = useRouter();
     console.log("SUBMIT START", data);
     const result = GardenSubmissionSchema.safeParse(data);
 
@@ -73,8 +73,7 @@ export default function SubmissionForm() {
     setHasSubmitted(true);
     await new Promise((resolve) => setTimeout(resolve, 500));
     reset();
-    router.push("/");
-    router.refresh();
+    router.push(`/?refresh=${Date.now()}`);
   };
   return (
     <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>

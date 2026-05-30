@@ -5,6 +5,7 @@ import { formatDistanceStrict } from "date-fns";
 import { useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
+import { useSearchParams } from "next/navigation";
 
 //on mobile screens, render an ordered list.
 //on desktop screens, render a table
@@ -12,6 +13,9 @@ const { formatDistance } = require("date-fns");
 export default function LatestTable() {
   const [latestData, setLatestData] = useState<GardenResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const refreshKey = searchParams.get("refresh");
+
   useEffect(() => {
     async function loadLatestData() {
       const data = await getLatestSubmissions();
@@ -20,7 +24,7 @@ export default function LatestTable() {
     }
 
     loadLatestData();
-  }, []);
+  }, [refreshKey]);
   console.log(latestData);
   return (
     <div>
