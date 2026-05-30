@@ -1,14 +1,26 @@
 "use client";
 import { getLatestSubmissions } from "@/firebase/get-latest-submissions";
+import { GardenResult } from "@/types/garden-result";
 import { formatDistanceStrict } from "date-fns";
+import { useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
 
 //on mobile screens, render an ordered list.
 //on desktop screens, render a table
 
-export default async function LatestTable() {
-  const latestData = await getLatestSubmissions();
+export default function LatestTable() {
+  const [latestData, setLatestData] = useState<GardenResult[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    async function loadLatestData() {
+      const data = await getLatestSubmissions();
+      setLatestData(data);
+      setIsLoading(false);
+    }
+
+    loadLatestData();
+  }, []);
   console.log(latestData);
   return (
     <div>

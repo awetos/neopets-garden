@@ -9,5 +9,6 @@ export const getLatestSubmissions = async () => {
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => ({
     ...(doc.data() as GardenResult),
+    id: doc.id,
   }));
 };
