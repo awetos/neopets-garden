@@ -1,4 +1,12 @@
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 import { db } from "./firebase-client";
 import { GardenResult } from "@/types/garden-result";
 
@@ -11,4 +19,12 @@ export const getLatestSubmissions = async () => {
     ...(doc.data() as GardenResult),
     id: doc.id,
   }));
+};
+
+export const getSeedById = async (id: string) => {
+  const docRef = doc(db, "gardenResults", id);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists()
+    ? { ...(docSnap.data() as GardenResult), id: docSnap.id }
+    : null;
 };

@@ -1,6 +1,13 @@
 import { db } from "@/firebase/firebase-client";
 import { GardenSubmission } from "@/components/submission-form/submission-form";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+  setDoc,
+  increment,
+} from "firebase/firestore";
 
 export const uploadToFirebase = async (data: GardenSubmission) => {
   await addDoc(collection(db, "gardenResults"), {
@@ -11,5 +18,18 @@ export const uploadToFirebase = async (data: GardenSubmission) => {
     createdAt: serverTimestamp(),
   });
 
-  await addDoc(collection(db, "gardenResults"), {});
+  await setDoc(
+    doc(db, "global", "allStats"),
+    {
+      totalSeeds: increment(1),
+      totalFragments: data.fragment === "true" ? increment(1) : increment(0),
+      seeds: {
+        [data.seed]: increment(1),
+      },
+      categories: {
+        [data.category]: increment(1),
+      },
+    },
+    { merge: true },
+  );
 };

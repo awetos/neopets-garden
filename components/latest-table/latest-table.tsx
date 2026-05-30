@@ -6,11 +6,15 @@ import { useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 //on mobile screens, render an ordered list.
 //on desktop screens, render a table
 
 export default function LatestTable() {
+  const router = useRouter();
+
   const [latestData, setLatestData] = useState<GardenResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
@@ -58,7 +62,11 @@ export default function LatestTable() {
           )}
           {latestData.map((data, index) => {
             return (
-              <tr key={index}>
+              <tr
+                key={index}
+                className="hover:cursor-pointer hover:bg-amber-400 hover:font-bold"
+                onClick={() => router.push(`/view-seed?id=${data.id}`)}
+              >
                 <td>{data.seed}</td>
                 <td>{data.item}</td>
                 <td>
