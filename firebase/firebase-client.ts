@@ -1,10 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
-import { GardenSubmission } from "./submission-form";
+import { GardenSubmission } from "../components/submission-form/submission-form";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,21 +22,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore();
+export const db = getFirestore();
 
 if (typeof window === "undefined") {
 } else {
   const analytics = getAnalytics(app);
 }
-
-export const uploadToFirebase = async (data: GardenSubmission) => {
-  await addDoc(collection(db, "gardenResults"), {
-    seed: data.seed,
-    item: data.item,
-    category: data.category,
-    fragment: data.fragment,
-    createdAt: serverTimestamp(),
-  });
-};
-
-export const getLatestSubmissions = async () => {};

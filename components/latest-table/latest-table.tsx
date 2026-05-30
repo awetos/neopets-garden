@@ -1,65 +1,45 @@
-import { seedNames } from "@/types/garden-result";
+import { getLatestSubmissions } from "@/firebase/get-latest-submissions";
+import { formatDistanceStrict } from "date-fns";
 
-type TableEntry = {
-  seed: string;
-  item: string;
-  timestamp: string;
-};
+const { formatDistance } = require("date-fns");
 
-function getRandomSeed() {
-  return seedNames[Math.floor(Math.random() * seedNames.length)];
-}
-
-function getRandomRecentDate() {
-  const now = new Date();
-
-  // random amount of time within last 3 days
-  const randomOffset = Math.floor(Math.random() * 3 * 24 * 60 * 60 * 1000);
-
-  const randomDate = new Date(now.getTime() - randomOffset);
-
-  return (
-    randomDate.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }) +
-    " " +
-    randomDate.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-    })
-  );
-}
-export function generateSampleData(count: number): TableEntry[] {
-  return Array.from({ length: count }, (_, index) => ({
-    seed: getRandomSeed(),
-    item: "item name",
-    timestamp: getRandomRecentDate(),
-  }));
-}
 //on mobile screens, render an ordered list.
 //on desktop screens, render a table
 
-export default function LatestTable() {
-  const sampleData = generateSampleData(7);
+export default async function LatestTable() {
+  const latestData = await getLatestSubmissions();
+  console.log(latestData);
   return (
     <div>
       <table className="w-full">
+        <colgroup>
+          <col className="w-2/7" />
+          <col className="w-4/7" />
+          <col className="w-1/7" />
+        </colgroup>
         <thead>
           <tr>
-            <th className="w-fit">Seed</th>
+            <th>Seed</th>
             <th>Item</th>
             <th>Timestamp</th>
           </tr>
         </thead>
         <tbody>
-          {sampleData.map((data, index) => {
+          {latestData.length < 1 && (
+            <tr>
+              <td colSpan={3} className="py-2 text-center">
+                There are no submissions
+              </td>
+            </tr>
+          )}
+          {latestData.map((data, index) => {
             return (
               <tr key={index}>
                 <td>{data.seed}</td>
                 <td>{data.item}</td>
-                <td>{data.timestamp}</td>
+                <td>
+                  {formatDistanceStrict(Date.now(), data.createdAt.toDate())}
+                </td>
               </tr>
             );
           })}

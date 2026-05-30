@@ -7,7 +7,7 @@ import { seeds } from "@/types/seeds";
 import { useState } from "react";
 import classes from "@/components/submission-form/submission-form.module.css";
 import { categories, seedNames } from "@/types/garden-result";
-import { uploadToFirebase } from "./firebase-client";
+import { uploadToFirebase } from "@/firebase/upload-submission";
 import { FirebaseError } from "firebase/app";
 import { redirect } from "next/navigation";
 const GardenSubmissionSchema = z.object({

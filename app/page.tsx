@@ -28,7 +28,7 @@ export default function Home() {
           <SubmissionForm></SubmissionForm>
         </div>
         <div className="my-4 w-full bg-amber-200">
-          Latest Submissions...
+          <div className="text-center text-sm">Latest Submissions...</div>
           <LatestTable></LatestTable>
         </div>
       </div>
