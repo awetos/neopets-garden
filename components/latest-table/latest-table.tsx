@@ -2,7 +2,7 @@
 import { getLatestSubmissions } from "@/firebase/get-latest-submissions";
 import { GardenResult } from "@/types/garden-result";
 import { formatDistanceStrict } from "date-fns";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
@@ -42,7 +42,14 @@ export default function LatestTable() {
           </tr>
         </thead>
         <tbody>
-          {latestData.length < 1 && (
+          {isLoading && (
+            <tr>
+              <td colSpan={3} className="py-2 text-center">
+                Loading Submissions...
+              </td>
+            </tr>
+          )}
+          {!isLoading && latestData.length < 1 && (
             <tr>
               <td colSpan={3} className="py-2 text-center">
                 There are no submissions
