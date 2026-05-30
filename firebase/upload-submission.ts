@@ -10,4 +10,6 @@ export const uploadToFirebase = async (data: GardenSubmission) => {
     fragment: data.fragment,
     createdAt: serverTimestamp(),
   });
+
+  await addDoc(collection(db, "gardenResults"), {});
 };
