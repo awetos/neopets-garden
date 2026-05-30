@@ -1,3 +1,4 @@
+"use client";
 import { getLatestSubmissions } from "@/firebase/get-latest-submissions";
 import { formatDistanceStrict } from "date-fns";
 
