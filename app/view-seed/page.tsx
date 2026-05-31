@@ -75,7 +75,7 @@ export default function ViewSeedPage() {
           <div
             onClick={async () => {
               console.log("Deleting:", seedData.id);
-              const res = await deleteSeedById(seedData.id);
+              const res = await deleteSeedById(seedData.id, seedData);
               console.log("Delete result:", res);
 
               if (res.success) {

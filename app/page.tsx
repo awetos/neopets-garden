@@ -1,6 +1,7 @@
 import SubmissionForm from "@/components/submission-form/submission-form";
 import LatestTable from "@/components/latest-table/latest-table";
 import { Suspense } from "react";
+import AllStatsPreview from "@/components/all-stats/stats-preview";
 
 export default function Home() {
   return (
@@ -19,15 +20,19 @@ export default function Home() {
             tracked among any other variables that might affect the outcomes.
           </p>
         </div>
-        <div className="w-full bg-amber-200 pt-2 text-center font-bold">
+        <div className="my-2 w-full bg-amber-200 pt-2 text-center font-bold">
           Submit your result
           <div className="mx-2 my-2 border-b-2 border-amber-500"></div>
           <SubmissionForm></SubmissionForm>
         </div>
-        <div className="my-4 w-full bg-amber-200">
+        <Suspense fallback={<p>Loading latest data...</p>}>
+          <AllStatsPreview />
+        </Suspense>
+        <div className="my-2 w-full bg-amber-200">
           <div className="text-center text-sm">Latest Submissions...</div>
+
           <Suspense fallback={<p>Loading latest submissions...</p>}>
-            <LatestTable></LatestTable>
+            <LatestTable />
           </Suspense>
         </div>
       </div>
