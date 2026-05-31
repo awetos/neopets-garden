@@ -35,7 +35,7 @@ export default function SubmissionForm() {
     formState: { isSubmitting, isSubmitSuccessful, errors },
   } = useForm<GardenSubmission>({
     defaultValues: {
-      seed: "",
+      seed: undefined,
       item: "",
       category: undefined,
     },
