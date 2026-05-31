@@ -19,4 +19,5 @@ export type GardenResult = {
   seed: string;
   category: (typeof categories)[number];
   fragment: "true" | "false";
+  modifiers: string[] | null;
 };

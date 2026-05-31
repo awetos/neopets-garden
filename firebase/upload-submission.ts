@@ -1,5 +1,5 @@
 import { db } from "@/firebase/firebase-client";
-import { GardenSubmission } from "@/components/submission-form/submission-form";
+import { GardenSubmission } from "@/types/garden-submission";
 import {
   collection,
   addDoc,
@@ -16,6 +16,7 @@ export const uploadToFirebase = async (data: GardenSubmission) => {
     category: data.category,
     fragment: data.fragment,
     createdAt: serverTimestamp(),
+    modifiers: data.modifiers,
   });
 
   await setDoc(

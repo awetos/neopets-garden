@@ -2,27 +2,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
 import { seeds } from "@/types/seeds";
 import { useState } from "react";
 import classes from "@/components/submission-form/submission-form.module.css";
-import { categories, seedNames } from "@/types/garden-result";
+import { categories } from "@/types/garden-result";
 import { uploadToFirebase } from "@/firebase/upload-submission";
 import { FirebaseError } from "firebase/app";
-import { redirect } from "next/navigation";
-import { refresh } from "next/cache";
-
 import { useRouter } from "next/navigation";
-
-const GardenSubmissionSchema = z.object({
-  seed: z.enum(seedNames, "You must select a seed"),
-  item: z
-    .string()
-    .min(3, "Item name cannot be empty and should be at least 3 characters"),
-  category: z.enum(categories, "Not a valid type"),
-  fragment: z.enum(["true", "false"]),
-});
-export type GardenSubmission = z.input<typeof GardenSubmissionSchema>;
+import { ModifiersDropdown } from "./modifiers-dropdown";
+import { GardenSubmission } from "@/types/garden-submission";
+import { GardenSubmissionSchema } from "@/types/garden-submission";
 
 export default function SubmissionForm() {
   const router = useRouter();
@@ -38,6 +27,8 @@ export default function SubmissionForm() {
       seed: undefined,
       item: "",
       category: undefined,
+      modifiers: [],
+      fragment: undefined,
     },
     resolver: zodResolver(GardenSubmissionSchema),
   });
@@ -190,7 +181,12 @@ export default function SubmissionForm() {
             {errors.fragment.message}
           </div>
         )}
-      </div>
+      </div>{" "}
+      <ModifiersDropdown
+        register={register}
+        isSubmitting={isSubmitting}
+        errors={errors}
+      />
       <button
         type="submit"
         disabled={isSubmitting}
