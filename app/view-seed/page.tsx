@@ -101,7 +101,7 @@ export default function ViewSeedPage() {
 export function checkDate(createdAt: Timestamp): boolean {
   const createdTime = createdAt.toMillis();
   const now = Date.now();
-
+  //do not allow deletes on older than 5 minutes
   const fiveMinutesInMs = 5 * 60 * 1000;
 
   return now - createdTime <= fiveMinutesInMs;

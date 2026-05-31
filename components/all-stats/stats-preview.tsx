@@ -1,12 +1,8 @@
 "use client";
-import { getLatestSubmissions } from "@/firebase/get-latest-submissions";
-import { GardenResult } from "@/types/garden-result";
-import { formatDistanceStrict } from "date-fns";
 import { useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AllStatsStructure, getLatestStats } from "@/firebase/get-stats";
 
@@ -37,8 +33,33 @@ export default function AllStatsPreview() {
   return (
     <div>
       {!isLoading && latestStats && (
-        <div className="text-center text-sm font-semibold">
-          {latestStats.totalSeeds} total seeds submitted
+        <div className="flex flex-row flex-wrap justify-evenly text-center text-sm font-semibold">
+          <div>
+            <p>
+              {latestStats.totalSeeds.toLocaleString()} total seeds submitted
+            </p>
+          </div>
+          <div>
+            <p>---</p>
+          </div>
+          <div>
+            <p>
+              {latestStats.totalFragments.toLocaleString()} fragments received
+            </p>
+          </div>
+          <div>
+            <p>---</p>
+          </div>
+          <div>
+            <p>
+              fragment drop rate:
+              {(
+                (latestStats.totalFragments / latestStats.totalSeeds) *
+                100
+              ).toFixed(2)}{" "}
+              %
+            </p>
+          </div>
         </div>
       )}
     </div>

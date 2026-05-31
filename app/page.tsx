@@ -29,11 +29,19 @@ export default function Home() {
           <AllStatsPreview />
         </Suspense>
         <div className="my-2 w-full bg-amber-200">
-          <div className="text-center text-sm">Latest Submissions...</div>
+          <div className="text-center text-lg font-normal">
+            <p>Latest Submissions</p>
+          </div>
+
+          <div className="my-2 border-b-2 border-amber-500"></div>
 
           <Suspense fallback={<p>Loading latest submissions...</p>}>
             <LatestTable />
           </Suspense>
+        </div>
+        <div className="text-center text-xs text-zinc-500">
+          Submissions within 5 minutes may be deleted if you've uploaded it by
+          accident
         </div>
       </div>
     </>
