@@ -46,4 +46,4 @@ export const seeds = [
     name: "Negg Seed",
     path: "/images/seeds/negg_seed.gif",
   },
-];
+] as const;

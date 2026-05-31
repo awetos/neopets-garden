@@ -1,7 +1,7 @@
 import { seeds } from "@/types/seeds";
 import { Timestamp } from "firebase/firestore";
 
-export const seedNames = seeds.map((seed) => seed.name) as [string];
+export const seedNames = seeds.map((seed) => seed.name);
 export const categories = [
   "food",
   "gardening",
