@@ -6,12 +6,14 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { seeds } from "@/types/seeds";
 import Image from "next/image";
+import { deleteSeedById } from "@/firebase/delete-submission";
 
 export default function ViewSeedPage() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [seedData, setSeedData] = useState<GardenResult>();
   const [seedPath, setSeedPath] = useState<string>();
+  const [deletionResult, setDeletionResult] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -55,6 +57,22 @@ export default function ViewSeedPage() {
               <div>
                 Submitted On: {seedData.createdAt.toDate().toLocaleString()}
               </div>
+              <div
+                onClick={async () => {
+                  console.log("Deleting:", seedData.id);
+                  const res = await deleteSeedById(seedData.id);
+                  console.log("Delete result:", res);
+
+                  if (res.success) {
+                    // redirect
+                    setDeletionResult(res.message);
+                  }
+                }}
+                className="bg-amber-400 p-2 hover:cursor-pointer hover:bg-amber-500"
+              >
+                Delete
+              </div>
+              {deletionResult}
             </div>
           </div>
         </div>
