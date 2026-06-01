@@ -52,11 +52,11 @@ export default function AllStatsPreview() {
           </div>
           <div>
             <p>
-              fragment drop rate:
+              fragment drop rate:{" "}
               {(
                 (latestStats.totalFragments / latestStats.totalSeeds) *
                 100
-              ).toFixed(2)}{" "}
+              ).toFixed(2)}
               %
             </p>
           </div>
