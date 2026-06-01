@@ -33,7 +33,7 @@ export default function Home() {
             <p>Latest Submissions</p>
           </div>
 
-          <div className="my-2 border-b-2 border-amber-500"></div>
+          <div className="mb-2 border-b-2 border-amber-500"></div>
 
           <Suspense fallback={<p>Loading latest submissions...</p>}>
             <LatestTable />
