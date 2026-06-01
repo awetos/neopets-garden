@@ -9,7 +9,11 @@ import { categories } from "@/types/garden-result";
 import { uploadToFirebase } from "@/firebase/upload-submission";
 import { FirebaseError } from "firebase/app";
 import { useRouter } from "next/navigation";
-import { ModifiersDropdown } from "./modifiers-dropdown";
+import {
+  loadFragmentCharmFromLocal,
+  ModifiersDropdown,
+  saveFragmentCharmToLocal,
+} from "./modifiers-dropdown";
 import { GardenSubmission } from "@/types/garden-submission";
 import { GardenSubmissionSchema } from "@/types/garden-submission";
 import {
@@ -35,6 +39,7 @@ export default function SubmissionForm() {
       category: undefined,
       modifiers: [],
       fragment: undefined,
+      fragmentCharm: "",
     },
     resolver: zodResolver(GardenSubmissionSchema),
   });
@@ -53,23 +58,25 @@ export default function SubmissionForm() {
   //we must use a UseEffect because the default values were defined before mount so it may  not be able to read local storage yet.
   useEffect(() => {
     const modifiers = loadModifiersFromLocal();
-
+    const fragmentCharm = loadFragmentCharmFromLocal();
     modifiers.forEach((modifier, index) => {
       setValue(`modifiers.${index}` as const, modifier);
     });
 
+    setValue("fragmentCharm", fragmentCharm);
     setHasLoadedModifiers(true);
     //anytime the user changes the value now, we will save to local storage.
   }, [setValue]);
 
   const modifiers = watch("modifiers");
+  const fragmentCharm = watch("fragmentCharm");
   //Once the modifiers have loaded (hasLoadedModifiers), we should save them instead of accidentally saving [] from default values.
-  useEffect(() => {
-    console.log("MODIFIERS CHANGED", modifiers);
-    if (!hasLoadedModifiers) return;
 
+  useEffect(() => {
+    if (!hasLoadedModifiers) return;
     saveModifiersToLocal(modifiers ?? []);
-  }, [modifiers, hasLoadedModifiers]);
+    saveFragmentCharmToLocal(fragmentCharm ?? "");
+  }, [modifiers, fragmentCharm, hasLoadedModifiers]);
 
   const onSubmit: SubmitHandler<GardenSubmission> = async (data) => {
     console.log("SUBMIT START", data);
@@ -91,6 +98,7 @@ export default function SubmissionForm() {
         category: undefined,
         fragment: undefined,
         modifiers: data.modifiers,
+        fragmentCharm: data.fragmentCharm,
       });
       router.push(`/?refresh=${Date.now()}`);
     } catch (error) {
@@ -199,7 +207,6 @@ export default function SubmissionForm() {
             ></Image>
           </div>
           <div className="flex flex-1 flex-row flex-wrap items-center justify-evenly">
-            {" "}
             <label className="flex cursor-pointer flex-row gap-2">
               <input
                 type="radio"

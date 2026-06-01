@@ -30,6 +30,31 @@ export const loadModifiersFromLocal = (): string[] => {
     return ["", "", ""];
   }
 };
+export const saveFragmentCharmToLocal = (
+  fragmentCharm: "true" | "false" | "",
+) => {
+  if (typeof window === "undefined") return;
+
+  localStorage.setItem("garden-fragment-charm", fragmentCharm);
+};
+
+export const loadFragmentCharmFromLocal = (): "true" | "false" | "" => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  try {
+    const stored = localStorage.getItem("garden-fragment-charm");
+
+    if (stored === "true" || stored === "false" || stored === "") {
+      return stored;
+    }
+
+    return "";
+  } catch {
+    return "";
+  }
+};
 type ModifiersInputProps = {
   register: UseFormRegister<GardenSubmission>;
   isSubmitting: boolean;
@@ -62,7 +87,7 @@ export function ModifiersDropdown({
       </div>
       {showDropdown && (
         <div className="flex flex-col bg-amber-500/50">
-          <div className="flex flex-col py-2 md:flex-row">
+          <div className="flex flex-col gap-2 py-2 md:flex-row">
             <div className="flex-1 flex-col">
               <input
                 autoComplete="off"
@@ -102,6 +127,34 @@ export function ModifiersDropdown({
           </div>
           <div className="w-full text-center text-sm font-normal text-red-500">
             {errors.modifiers?.message ? errors.modifiers.message : ""}
+          </div>
+          <div className="flex flex-col">
+            <div>
+              <p>
+                Do you have a fragment charm? (increases odds of getting a
+                fragment)
+              </p>
+            </div>
+            <div className="flex flex-row flex-wrap justify-evenly">
+              <label className="flex cursor-pointer flex-row gap-2">
+                <input
+                  type="radio"
+                  disabled={isSubmitting}
+                  {...register("fragmentCharm")}
+                  value={"true"}
+                ></input>
+                <p className="font-normal">I have a fragment charm</p>
+              </label>
+              <label className="flex cursor-pointer flex-row gap-2">
+                <input
+                  type="radio"
+                  disabled={isSubmitting}
+                  {...register("fragmentCharm")}
+                  value={"false"}
+                ></input>
+                <p className="font-normal">No fragment charm</p>
+              </label>
+            </div>
           </div>
         </div>
       )}
