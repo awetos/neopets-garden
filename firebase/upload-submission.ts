@@ -22,6 +22,7 @@ export const uploadToFirebase = async (
   data: GardenSubmission,
 ): Promise<any> => {
   try {
+    data.item = normalizeItemName(data.item);
     const batch = writeBatch(db);
 
     addGardenSubmissionToBatch(batch, data);
@@ -41,4 +42,17 @@ export const uploadToFirebase = async (
 
     throw new Error("Something went wrong with submission.");
   }
+};
+
+//removes leading and trailling white space
+//converts multiple spaces into just 1
+//capitalizes the first letter if applicable
+//5 dubloon coin => 5 Dubloon Coin
+const normalizeItemName = (item: string): string => {
+  return item
+    .trim()
+    .replace(/\s+/g, " ")
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 };

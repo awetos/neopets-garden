@@ -8,7 +8,7 @@ import { Transaction } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
 //First we read our item entry to see whether we should delete or update the doc.
-//since the read might fail, we should throw an error if that happens
+//Since the read might fail, we should throw an error if that happens
 export const deleteItem = async (
   transaction: Transaction,
   data: GardenResult,
