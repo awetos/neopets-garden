@@ -6,17 +6,29 @@ import { ChevronDown } from "lucide-react";
 import { ChevronUp } from "lucide-react";
 import { FieldErrors } from "react-hook-form";
 export const saveModifiersToLocal = (modifiers: string[]) => {
+  //we must guard against calling this function if it's not in the browser or else it won't  build
+  if (typeof window === "undefined") return;
   localStorage.setItem("garden-modifiers", JSON.stringify(modifiers));
 };
 
 export const loadModifiersFromLocal = (): string[] => {
-  const stored = localStorage.getItem("garden-modifiers");
+  //we must guard against calling this function if it's not in the browser or else it won't  build
 
-  if (!stored) {
+  if (typeof window === "undefined") {
     return ["", "", ""];
   }
 
-  return JSON.parse(stored);
+  try {
+    const stored = localStorage.getItem("garden-modifiers");
+
+    if (!stored) {
+      return ["", "", ""];
+    }
+
+    return JSON.parse(stored);
+  } catch {
+    return ["", "", ""];
+  }
 };
 type ModifiersInputProps = {
   register: UseFormRegister<GardenSubmission>;
