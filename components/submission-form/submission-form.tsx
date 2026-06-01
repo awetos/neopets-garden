@@ -12,10 +12,6 @@ import { useRouter } from "next/navigation";
 import { ModifiersDropdown } from "./modifiers-dropdown";
 import { GardenSubmission } from "@/types/garden-submission";
 import { GardenSubmissionSchema } from "@/types/garden-submission";
-import {
-  saveModifiersToLocal,
-  loadModifiersFromLocal,
-} from "@/components/submission-form/modifiers-dropdown";
 
 export default function SubmissionForm() {
   const router = useRouter();
@@ -44,30 +40,6 @@ export default function SubmissionForm() {
   const updateSuccessMessage = () => {
     setHasSubmitted(false);
   };
-
-  const [hasLoadedModifiers, setHasLoadedModifiers] = useState(false);
-
-  //we must use a UseEffect because the default values were defined before mount so it may  not be able to read local storage yet.
-  useEffect(() => {
-    const modifiers = loadModifiersFromLocal();
-
-    modifiers.forEach((modifier, index) => {
-      setValue(`modifiers.${index}` as const, modifier);
-    });
-
-    setHasLoadedModifiers(true);
-  }, [setValue]);
-  //anytime the user changes the value now, we will save to local storage.
-
-  const modifiers = watch("modifiers");
-
-  useEffect(() => {
-    console.log("MODIFIERS CHANGED", modifiers);
-    if (!hasLoadedModifiers) return;
-
-    saveModifiersToLocal(modifiers ?? []);
-  }, [modifiers, hasLoadedModifiers]);
-  //Once the modifiers have loaded, we should save them, otherwise modifiers was set to [] on mount via default Values and [] might be saved.
 
   //submit function
   const [currentSeed, setCurrentSeed] = useState<string>();
