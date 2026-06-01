@@ -1,36 +1,44 @@
 import { db } from "@/firebase/firebase-client";
 import { GardenSubmission } from "@/types/garden-submission";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  doc,
-  setDoc,
-  increment,
-} from "firebase/firestore";
+import { writeBatch } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
+import { addGardenSubmissionToBatch } from "./upload-helpers/garden-submission-upload";
+import { addGlobalStatsToBatch } from "./upload-helpers/global-stats-upload";
+import { addItemsListToBatch } from "./upload-helpers/items-upload";
+import { addSeedsListToBatch } from "./upload-helpers/seeds-upload";
 
-export const uploadToFirebase = async (data: GardenSubmission) => {
-  await addDoc(collection(db, "gardenResults"), {
-    seed: data.seed,
-    item: data.item,
-    category: data.category,
-    fragment: data.fragment,
-    createdAt: serverTimestamp(),
-    modifiers: data.modifiers,
-  });
+/*In order to limit document reads, we upload to 4 collections: 
+1. raw submissions: each upload has a unique ID; limit retrieval by 20. 
+2. total stats: a document containing all seed uploads for users to quickly see their seed has been added to the database
+3. seeds: a breakdown of categories and fragment rates per seed.
+4. items: a count of how many times an item has been added into which seed. Do not save the category because some people may put the wrong category.
 
-  await setDoc(
-    doc(db, "global", "allStats"),
-    {
-      totalSeeds: increment(1),
-      totalFragments: data.fragment === "true" ? increment(1) : increment(0),
-      seeds: {
-        [data.seed]: increment(1),
-      },
-      categories: {
-        [data.category]: increment(1),
-      },
-    },
-    { merge: true },
-  );
+In order to see the exact seed submissions that caused the item, we will need to index the raw submissions in search of the item. 
+This may be costly, but not overkill for now and allows us to continue development
+If it becomes overkill (eg. easily exceeding 10k reads a day) then we will move to a sql database then. 
+*/
+
+export const uploadToFirebase = async (
+  data: GardenSubmission,
+): Promise<any> => {
+  try {
+    const batch = writeBatch(db);
+
+    addGardenSubmissionToBatch(batch, data);
+    addGlobalStatsToBatch(batch, data);
+    addSeedsListToBatch(batch, data);
+    addItemsListToBatch(batch, data);
+
+    await batch.commit();
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      throw new Error("Firebase upload failed: " + error.message);
+    }
+
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error("Something went wrong with submission.");
+  }
 };

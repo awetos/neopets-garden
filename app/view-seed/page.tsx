@@ -8,6 +8,7 @@ import { seeds } from "@/types/seeds";
 import Image from "next/image";
 import { deleteSeedById } from "@/firebase/delete-submission";
 import { Timestamp } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
 
 export default function ViewSeedPage() {
   const searchParams = useSearchParams();
@@ -75,12 +76,22 @@ export default function ViewSeedPage() {
           <div
             onClick={async () => {
               console.log("Deleting:", seedData.id);
-              const res = await deleteSeedById(seedData.id, seedData);
-              console.log("Delete result:", res);
+              try {
+                const res = await deleteSeedById(seedData.id, seedData);
 
-              if (res.success) {
-                // redirect
-                setDeletionResult(res.message);
+                setDeletionResult(
+                  `Seed with ID ${seedData.id} deleted successfully.`,
+                );
+              } catch (e) {
+                if (e instanceof FirebaseError) {
+                  setDeletionResult(e.message);
+                } else if (e instanceof Error) {
+                  setDeletionResult(e.message);
+                } else {
+                  setDeletionResult(
+                    "An unknown error occurred during deletion.",
+                  );
+                }
               }
             }}
             className="my-2 max-w-full bg-amber-400 p-2 px-20 hover:bg-amber-500"

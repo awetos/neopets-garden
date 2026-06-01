@@ -18,10 +18,6 @@ export const GardenSubmissionSchema = z.object({
   fragment: z.enum(["true", "false"]),
   modifiers: z
     .array(modifierSchema)
-    .max(3, "You cannot have more than 3 modifiers")
-    .min(
-      2,
-      "You must have at least 2 modifiers, this is for testing purposes.",
-    ),
+    .max(3, "You cannot have more than 3 modifiers"),
 });
 export type GardenSubmission = z.input<typeof GardenSubmissionSchema>;

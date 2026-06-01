@@ -11,7 +11,7 @@ import { db } from "./firebase-client";
 import { GardenResult } from "@/types/garden-result";
 
 export const getLatestSubmissions = async () => {
-  const submissionsRef = collection(db, "gardenResults");
+  const submissionsRef = collection(db, "garden-submissions");
   const q = query(submissionsRef, orderBy("createdAt", "desc"), limit(5));
 
   const snapshot = await getDocs(q);
@@ -22,7 +22,7 @@ export const getLatestSubmissions = async () => {
 };
 
 export const getSeedById = async (id: string) => {
-  const docRef = doc(db, "gardenResults", id);
+  const docRef = doc(db, "garden-submissions", id);
   const docSnap = await getDoc(docRef);
   return docSnap.exists()
     ? { ...(docSnap.data() as GardenResult), id: docSnap.id }

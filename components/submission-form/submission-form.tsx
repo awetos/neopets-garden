@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { seeds } from "@/types/seeds";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "@/components/submission-form/submission-form.module.css";
 import { categories } from "@/types/garden-result";
 import { uploadToFirebase } from "@/firebase/upload-submission";
@@ -12,12 +12,18 @@ import { useRouter } from "next/navigation";
 import { ModifiersDropdown } from "./modifiers-dropdown";
 import { GardenSubmission } from "@/types/garden-submission";
 import { GardenSubmissionSchema } from "@/types/garden-submission";
+import {
+  saveModifiersToLocal,
+  loadModifiersFromLocal,
+} from "@/components/submission-form/modifiers-dropdown";
 
 export default function SubmissionForm() {
   const router = useRouter();
   //handleSubmit comes from form and prevents default
   const {
     register,
+    watch,
+    setValue,
     handleSubmit,
     setError,
     reset,
@@ -39,6 +45,30 @@ export default function SubmissionForm() {
     setHasSubmitted(false);
   };
 
+  const [hasLoadedModifiers, setHasLoadedModifiers] = useState(false);
+
+  //we must use a UseEffect because the default values were defined before mount so it may  not be able to read local storage yet.
+  useEffect(() => {
+    const modifiers = loadModifiersFromLocal();
+
+    modifiers.forEach((modifier, index) => {
+      setValue(`modifiers.${index}` as const, modifier);
+    });
+
+    setHasLoadedModifiers(true);
+  }, [setValue]);
+  //anytime the user changes the value now, we will save to local storage.
+
+  const modifiers = watch("modifiers");
+
+  useEffect(() => {
+    console.log("MODIFIERS CHANGED", modifiers);
+    if (!hasLoadedModifiers) return;
+
+    saveModifiersToLocal(modifiers ?? []);
+  }, [modifiers, hasLoadedModifiers]);
+  //Once the modifiers have loaded, we should save them, otherwise modifiers was set to [] on mount via default Values and [] might be saved.
+
   //submit function
   const [currentSeed, setCurrentSeed] = useState<string>();
   const [hasSubmitted, setHasSubmitted] = useState<true | false>(false);
@@ -52,22 +82,36 @@ export default function SubmissionForm() {
       return;
     }
     try {
-      await uploadToFirebase(data);
+      const response = await uploadToFirebase(data);
+      setHasSubmitted(true);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      reset({
+        seed: undefined,
+        item: "",
+        category: undefined,
+        fragment: undefined,
+        modifiers: data.modifiers,
+      });
+      router.push(`/?refresh=${Date.now()}`);
     } catch (error) {
       if (error instanceof FirebaseError) {
         setError("root", { message: error.message });
       } else {
-        setError("root", { message: "Something went wrong with submission." });
+        setError("root", {
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        });
       }
     }
-
-    setHasSubmitted(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    reset();
-    router.push(`/?refresh=${Date.now()}`);
   };
   return (
-    <form className="flex flex-col gap-4 p-2" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="flex flex-col gap-4 p-2 text-center"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className={classes["seeds-list"]}>
         {seeds.map((seed) => {
           return (
@@ -156,15 +200,7 @@ export default function SubmissionForm() {
             ></Image>
           </div>
           <div className="flex flex-1 flex-row flex-wrap items-center justify-evenly">
-            <label className="flex cursor-pointer flex-row gap-2">
-              <input
-                disabled={isSubmitting}
-                type="radio"
-                {...register("fragment")}
-                value={"true"}
-              ></input>
-              <p>yes</p>
-            </label>
+            {" "}
             <label className="flex cursor-pointer flex-row gap-2">
               <input
                 type="radio"
@@ -173,6 +209,15 @@ export default function SubmissionForm() {
                 value={"false"}
               ></input>
               <p>no</p>
+            </label>
+            <label className="flex cursor-pointer flex-row gap-2">
+              <input
+                disabled={isSubmitting}
+                type="radio"
+                {...register("fragment")}
+                value={"true"}
+              ></input>
+              <p>yes</p>
             </label>
           </div>
         </div>
