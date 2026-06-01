@@ -6,6 +6,7 @@ import { deleteGardenSubmission } from "./delete-helpers/delete-garden-submissio
 import { updateSeedData } from "./delete-helpers/delete-seed";
 import { updateGlobalData } from "./delete-helpers/delete-global";
 
+//I decided to do 4 writes as a "cached stats" instead of switching the whole project over to postgres/sql for now.
 export const deleteSeedById = async (data: GardenResult) => {
   try {
     await runTransaction(db, async (transaction) => {

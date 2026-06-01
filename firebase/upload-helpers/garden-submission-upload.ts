@@ -20,5 +20,6 @@ export const addGardenSubmissionToBatch = (
     fragment: data.fragment,
     createdAt: serverTimestamp(),
     modifiers: data.modifiers,
+    fragmentCharm: data.fragmentCharm,
   });
 };

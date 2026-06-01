@@ -1,7 +1,7 @@
 "use client";
 import { GardenSubmission } from "@/types/garden-submission";
 import { useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { ChevronDown } from "lucide-react";
 import { ChevronUp } from "lucide-react";
 import { FieldErrors } from "react-hook-form";
@@ -59,19 +59,21 @@ type ModifiersInputProps = {
   register: UseFormRegister<GardenSubmission>;
   isSubmitting: boolean;
   errors: FieldErrors<GardenSubmission>;
+  setValue: UseFormSetValue<GardenSubmission>;
 };
 
 export function ModifiersDropdown({
   register,
   isSubmitting,
   errors,
+  setValue,
 }: ModifiersInputProps) {
   const [showDropdown, setShowDropdown] = useState(true);
 
   return (
     <div>
       <div
-        className="bg-amber-400"
+        className="flex flex-row justify-between bg-amber-400"
         onClick={() => {
           if (showDropdown) {
             setShowDropdown(false);
@@ -80,11 +82,23 @@ export function ModifiersDropdown({
           }
         }}
       >
-        <span className="flex flex-row pl-5">
+        <div className="flex pl-5">
           <p>Add Modifiers? (Optional)</p>
           {showDropdown ? <ChevronDown /> : <ChevronUp />}
-        </span>
+        </div>
+        <div
+          className="flex bg-red-500/50 pr-2 font-normal"
+          onClick={(e) => {
+            e.stopPropagation();
+            setValue("modifiers", ["", "", ""]);
+            setValue("fragmentCharm", "");
+            // clear logic here
+          }}
+        >
+          <p>Clear</p>
+        </div>
       </div>
+
       {showDropdown && (
         <div className="flex flex-col bg-amber-500/50">
           <div className="flex flex-col gap-2 py-2 md:flex-row">

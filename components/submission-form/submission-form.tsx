@@ -237,6 +237,7 @@ export default function SubmissionForm() {
         register={register}
         isSubmitting={isSubmitting}
         errors={errors}
+        setValue={setValue}
       />
       <button
         type="submit"
