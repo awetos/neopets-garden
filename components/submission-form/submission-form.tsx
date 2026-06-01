@@ -59,18 +59,17 @@ export default function SubmissionForm() {
     });
 
     setHasLoadedModifiers(true);
+    //anytime the user changes the value now, we will save to local storage.
   }, [setValue]);
-  //anytime the user changes the value now, we will save to local storage.
 
   const modifiers = watch("modifiers");
-
+  //Once the modifiers have loaded (hasLoadedModifiers), we should save them instead of accidentally saving [] from default values.
   useEffect(() => {
     console.log("MODIFIERS CHANGED", modifiers);
     if (!hasLoadedModifiers) return;
 
     saveModifiersToLocal(modifiers ?? []);
   }, [modifiers, hasLoadedModifiers]);
-  //Once the modifiers have loaded, we should save them, otherwise modifiers was set to [] on mount via default Values and [] might be saved.
 
   const onSubmit: SubmitHandler<GardenSubmission> = async (data) => {
     console.log("SUBMIT START", data);

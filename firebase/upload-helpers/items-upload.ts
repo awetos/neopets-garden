@@ -9,7 +9,7 @@ export const addItemsListToBatch = (
   batch.set(
     doc(db, "items", data.item),
     {
-      [data.category]: increment(1),
+      [data.seed]: increment(1),
     },
     { merge: true },
   );

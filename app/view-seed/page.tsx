@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { seeds } from "@/types/seeds";
 import Image from "next/image";
-import { deleteSeedById } from "@/firebase/delete-submission";
+import { deleteSeedById } from "@/firebase/delete-by-transaction";
 import { Timestamp } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
@@ -75,9 +75,9 @@ export default function ViewSeedPage() {
         <div className="item-center flex w-full justify-center hover:cursor-pointer">
           <div
             onClick={async () => {
-              console.log("Deleting:", seedData.id);
+              console.log("Deleting (by transaction now!):", seedData.id);
               try {
-                const res = await deleteSeedById(seedData.id, seedData);
+                const res = await deleteSeedById(seedData);
 
                 setDeletionResult(
                   `Seed with ID ${seedData.id} deleted successfully.`,

@@ -21,3 +21,11 @@ export const GardenSubmissionSchema = z.object({
     .max(3, "You cannot have more than 3 modifiers"),
 });
 export type GardenSubmission = z.input<typeof GardenSubmissionSchema>;
+
+export type SeedList = {
+  fragments?: number;
+} & Partial<Record<(typeof categories)[number], number>>;
+
+export type ItemList = {
+  [seedName in (typeof seedNames)[number]]?: number;
+};
