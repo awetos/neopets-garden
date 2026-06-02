@@ -100,12 +100,18 @@ export function ModifiersDropdown({
 
       {showDropdown && (
         <div className="flex flex-col bg-amber-500/50">
+          {" "}
+          <div className="p-2 text-left text-sm font-normal">
+            Modifiers are items added to your Neogarden that may increase rare
+            item drop rate. Modifiers are saved on your browser's local storage
+            after submit so you do not have to type them every time.
+          </div>
           <div className="flex flex-col gap-2 p-2 md:flex-row">
             <div className="flex-1 flex-col">
               <input
                 autoComplete="off"
                 type="text"
-                className="mx-0 w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
+                className="w-[80%] border-2 border-zinc-500 bg-white font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.0")}
               />
@@ -117,7 +123,7 @@ export function ModifiersDropdown({
               <input
                 autoComplete="off"
                 type="text"
-                className="mx-0 w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
+                className="w-[80%] border-2 border-zinc-500 bg-white font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.1")}
               />{" "}
@@ -129,7 +135,7 @@ export function ModifiersDropdown({
               <input
                 autoComplete="off"
                 type="text"
-                className="mx-0 w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
+                className="w-[80%] border-2 border-zinc-500 bg-white font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.2")}
               />
