@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <div className="flex w-full flex-col">
+        <div className="flex flex-col">
           <p></p> Welcome! This is a site to record a crowd sourced database for
           results of the gardening on Neopets-Classic.
           <p>
@@ -15,7 +15,7 @@ export default function Home() {
             for curiousity.
           </p>
         </div>
-        <div className="my-2 w-full bg-amber-200 pt-2 font-bold">
+        <div className="my-2 bg-amber-200 pt-2 font-bold">
           <p className="pl-5">Submit your result</p>
           <div className="my-2 border-b-2 border-amber-500"></div>
           <SubmissionForm></SubmissionForm>
@@ -23,7 +23,7 @@ export default function Home() {
         <Suspense fallback={<p>Loading latest data...</p>}>
           <AllStatsPreview />
         </Suspense>
-        <div className="my-2 w-full bg-amber-200">
+        <div className="my-2 bg-amber-200">
           <div className="text-center text-lg font-normal">
             <p>Latest Submissions</p>
           </div>
