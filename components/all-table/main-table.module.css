@@ -5,9 +5,11 @@
 .tableRow:nth-child(even) {
   background-color: rgb(254 243 199); /* amber-100 */
 }
-.tableRow td {
-  text-align: center;
+.tableRow {
+  height: 12px;
+  max-height: 12px;
 }
+
 .tableRow:hover {
   background-color: rgb(252 211 77); /* amber-300 */
 }

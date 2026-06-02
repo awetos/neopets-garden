@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import classes from "./main-table.module.css";
 import { getLatestTable } from "@/firebase/search/get-latest-table";
+import Link from "next/link";
 
 export default function MainTable() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function MainTable() {
   console.log(latestData);
   return (
     <>
-      <table className="w-full bg-amber-300">
+      <table className="w-full table-fixed bg-amber-300">
         <colgroup>
           <col className="w-1/12" />
           <col className="w-2/12" />
@@ -66,25 +67,62 @@ export default function MainTable() {
           {!isLoading &&
             latestData.map((data) => {
               const foundSeed = seeds.find((seed) => seed.name === data.seed);
+              const href = `/view-seed?id=${data.id}`;
 
               return (
-                <tr key={data.id} className={classes.tableRow}>
+                <tr
+                  key={data.id}
+                  className={`${classes.tableRow} overflow-hidden whitespace-nowrap hover:font-bold`}
+                >
                   <td>
                     {foundSeed && (
-                      <Image
-                        src={foundSeed.clearPath}
-                        alt={`Image of ${data.seed}`}
-                        width={30}
-                        height={30}
-                        className="mx-auto"
-                      />
+                      <Link
+                        href={href}
+                        className="flex h-full w-full items-center justify-center"
+                      >
+                        <Image
+                          src={foundSeed.clearPath}
+                          alt={`Image of ${data.seed}`}
+                          width={30}
+                          height={30}
+                          className="mx-auto"
+                        />
+                      </Link>
                     )}
                   </td>
 
-                  <td>{data.seed}</td>
-                  <td>{data.item}</td>
-                  <td>{data.category}</td>
-                  <td>{data.fragment}</td>
+                  <td>
+                    <Link
+                      href={href}
+                      className="flex h-full w-full items-center justify-center"
+                    >
+                      {data.seed}
+                    </Link>
+                  </td>
+                  <td>
+                    <Link
+                      href={href}
+                      className="flex h-full w-full items-center justify-center"
+                    >
+                      {data.item}
+                    </Link>
+                  </td>
+                  <td>
+                    <Link
+                      href={href}
+                      className="flex h-full w-full items-center justify-center"
+                    >
+                      {data.category}
+                    </Link>
+                  </td>
+                  <td>
+                    <Link
+                      href={href}
+                      className="flex h-full w-full items-center justify-center"
+                    >
+                      {data.fragment}
+                    </Link>
+                  </td>
                 </tr>
               );
             })}
