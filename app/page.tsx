@@ -18,7 +18,6 @@ export default function Home() {
         <div className="my-2 bg-amber-200 pt-2 font-bold">
           <p className="pl-5">Submit your result</p>
           <div className="my-2 border-b-2 border-amber-500"></div>
-          <SubmissionForm></SubmissionForm>
         </div>
         <Suspense fallback={<p>Loading latest data...</p>}>
           <AllStatsPreview />
