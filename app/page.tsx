@@ -6,7 +6,7 @@ import AllStatsPreview from "@/components/all-stats/stats-preview";
 export default function Home() {
   return (
     <>
-      <div className="max-w-full">
+      <div>
         <div className="flex w-full flex-col">
           <p></p> Welcome! This is a site to record a crowd sourced database for
           results of the gardening on Neopets-Classic.

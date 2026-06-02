@@ -34,7 +34,7 @@ export default function RootLayout({
         <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-amber-100">
           <Navbar></Navbar>
           <div
-            className={`md:p-large mx-0 w-full border-0 bg-amber-50 p-2 md:mx-auto md:my-2 md:max-w-3xl md:border-2 md:border-amber-300`}
+            className={`md:p-large mx-0 w-full max-w-full border-0 bg-amber-50 p-2 md:mx-auto md:my-2 md:max-w-3xl md:border-2 md:border-amber-300`}
           >
             <main>{children}</main>
           </div>
