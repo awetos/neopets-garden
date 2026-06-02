@@ -20,4 +20,5 @@ export type GardenResult = {
   category: (typeof categories)[number];
   fragment: "true" | "false";
   modifiers: string[] | null;
+  fragmentCharm: string;
 };

@@ -16,6 +16,8 @@ export default function ViewSeedPage() {
   const [seedData, setSeedData] = useState<GardenResult>();
   const [seedPath, setSeedPath] = useState<string>();
   const [isRecent, setIsRecent] = useState<true | false>(false);
+
+  const [hasExtraData, setHasExtraData] = useState<true | false>(false);
   const [deletionResult, setDeletionResult] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState(true);
@@ -33,6 +35,13 @@ export default function ViewSeedPage() {
         //on the server there is another check too, but let's make it visible / not visible on client as well whether you can delete or not.
         const renderDeleteButton = checkDate(seedResult.createdAt);
         setIsRecent(renderDeleteButton);
+
+        if (seedResult.modifiers) {
+          const shouldRenderExtraData =
+            seedResult.modifiers.some((modifier) => modifier.trim() !== "") ||
+            seedResult.fragmentCharm.trim() !== "";
+          setHasExtraData(shouldRenderExtraData);
+        }
       }
       setIsLoading(false);
     }
@@ -73,7 +82,39 @@ export default function ViewSeedPage() {
             </div>
           </div>
           {/*Modifier info */}
-          <div className="flex flex-1 bg-red-200"> I am modifier info</div>
+          <div className="flex flex-1 flex-col">
+            <div className="mt-5 pl-5 text-lg font-bold">Modifier Info</div>
+            <div className="mx-5 border border-b-amber-500"></div>
+
+            {hasExtraData ? (
+              <table className="w-full table-auto">
+                <tbody>
+                  {seedData.modifiers &&
+                    seedData.modifiers
+                      .filter((modifier) => modifier !== "")
+                      .map((modifier, index) => (
+                        <tr key={index}>
+                          <td className="px-2 py-1 font-semibold">Modifier</td>
+                          <td className="px-2 py-1">{modifier}</td>
+                        </tr>
+                      ))}
+
+                  <tr>
+                    <td className="px-2 py-1 font-semibold">Fragment Charm</td>
+                    <td className="px-2 py-1">
+                      {seedData.fragmentCharm === "true"
+                        ? "Yes"
+                        : seedData.fragmentCharm === "false"
+                          ? "No"
+                          : "Unknown"}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            ) : (
+              <div className="w-full text-center"> No extra data </div>
+            )}
+          </div>
         </div>
       )}
       {!isLoading && seedData && isRecent && (
