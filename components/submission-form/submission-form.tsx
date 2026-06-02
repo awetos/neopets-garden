@@ -6,7 +6,7 @@ import { seeds } from "@/types/seeds";
 import { useEffect, useState } from "react";
 import classes from "@/components/submission-form/submission-form.module.css";
 import { categories } from "@/types/garden-result";
-import { uploadToFirebase } from "@/firebase/upload-submission";
+import { uploadToFirebase } from "@/firebase/upload/upload-submission";
 import { FirebaseError } from "firebase/app";
 import { useRouter } from "next/navigation";
 import {

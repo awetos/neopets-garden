@@ -1,12 +1,11 @@
 "use client";
-import { getLatestSubmissions } from "@/firebase/get-latest-submissions";
+import { getLatestSubmissions } from "@/firebase/get-latest-preview";
 import { GardenResult } from "@/types/garden-result";
 import { formatDistanceStrict } from "date-fns";
 import { useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 //on mobile screens, render an ordered list.

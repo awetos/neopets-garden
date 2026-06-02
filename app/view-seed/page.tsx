@@ -1,12 +1,12 @@
 "use client";
 
-import { getSeedById } from "@/firebase/get-latest-submissions";
+import { getSeedById } from "@/firebase/get-latest-preview";
 import { GardenResult } from "@/types/garden-result";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { seeds } from "@/types/seeds";
 import Image from "next/image";
-import { deleteSeedById } from "@/firebase/delete-by-transaction";
+import { deleteSeedById } from "@/firebase/delete/delete-by-transaction";
 import { Timestamp } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
