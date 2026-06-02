@@ -244,7 +244,7 @@ export default function SubmissionForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mx-auto w-sm max-w-full cursor-pointer bg-amber-500 p-2 text-black active:scale-95 active:shadow-sm disabled:cursor-auto disabled:opacity-50"
+        className="mx-auto w-full max-w-sm cursor-pointer bg-amber-500 p-2 text-black active:scale-95 active:shadow-sm disabled:cursor-auto disabled:opacity-50"
       >
         {isSubmitting ? "Submitting..." : "Submit"}
       </button>
