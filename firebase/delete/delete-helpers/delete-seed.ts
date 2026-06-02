@@ -4,7 +4,7 @@
 
 import { GardenResult } from "@/types/garden-result";
 import { doc, increment } from "firebase/firestore";
-import { db } from "../firebase-client";
+import { db } from "@/firebase/firebase-client";
 
 import { Transaction } from "firebase/firestore";
 

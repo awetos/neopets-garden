@@ -2,7 +2,7 @@
 
 import { GardenResult } from "@/types/garden-result";
 import { deleteField, doc, increment } from "firebase/firestore";
-import { db } from "../firebase-client";
+import { db } from "@/firebase/firebase-client";
 
 import { Transaction } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";

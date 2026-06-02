@@ -1,5 +1,5 @@
 import { runTransaction } from "firebase/firestore";
-import { db } from "../firebase-client";
+import { db } from "@/firebase/firebase-client";
 import { GardenResult } from "@/types/garden-result";
 import { deleteItem } from "./delete-helpers/delete-item";
 import { deleteGardenSubmission } from "./delete-helpers/delete-garden-submission";

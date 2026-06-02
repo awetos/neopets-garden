@@ -1,7 +1,7 @@
 import { GardenResult } from "@/types/garden-result";
 import { Transaction } from "firebase/firestore";
 import { doc } from "firebase/firestore";
-import { db } from "../firebase-client";
+import { db } from "@/firebase/firebase-client";
 
 //no throwing errors, this is just queueing the action for the transaction
 export const deleteGardenSubmission = (
