@@ -68,7 +68,7 @@ export function ModifiersDropdown({
   errors,
   setValue,
 }: ModifiersInputProps) {
-  const [showDropdown, setShowDropdown] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <div>
@@ -84,29 +84,33 @@ export function ModifiersDropdown({
       >
         <div className="flex pl-5">
           <p>Add Modifiers? (Optional)</p>
-          {showDropdown ? <ChevronDown /> : <ChevronUp />}
+          {showDropdown ? <ChevronUp /> : <ChevronDown />}
         </div>
         <div
-          className="flex bg-red-500/50 pr-2 font-normal"
+          className="flex bg-red-500/20 px-2 font-normal"
           onClick={(e) => {
             e.stopPropagation();
             setValue("modifiers", ["", "", ""]);
             setValue("fragmentCharm", "");
-            // clear logic here
           }}
         >
-          <p>Clear</p>
+          <p>[Clear]</p>
         </div>
       </div>
 
       {showDropdown && (
         <div className="flex flex-col bg-amber-500/50">
-          <div className="flex flex-col gap-2 py-2 md:flex-row">
+          <div className="p-2 text-left text-sm font-normal">
+            Modifiers are items added to your Neogarden that may increase rare
+            item drop rate. Modifiers are saved on your browser's local storage
+            after submit so you do not have to type them every time.
+          </div>
+          <div className="flex flex-col gap-2 p-2 md:flex-row">
             <div className="flex-1 flex-col">
               <input
                 autoComplete="off"
                 type="text"
-                className="mx-0 border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:mx-2"
+                className="mx-0 w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.0")}
               />
@@ -118,7 +122,7 @@ export function ModifiersDropdown({
               <input
                 autoComplete="off"
                 type="text"
-                className="mx-0 border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:mx-2"
+                className="mx-0 w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.1")}
               />{" "}
@@ -130,7 +134,7 @@ export function ModifiersDropdown({
               <input
                 autoComplete="off"
                 type="text"
-                className="mx-0 border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:mx-2"
+                className="mx-0 w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.2")}
               />
