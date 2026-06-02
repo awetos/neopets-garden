@@ -100,11 +100,6 @@ export function ModifiersDropdown({
 
       {showDropdown && (
         <div className="flex flex-col bg-amber-500/50">
-          <div className="p-2 text-left text-sm font-normal">
-            Modifiers are items added to your Neogarden that may increase rare
-            item drop rate. Modifiers are saved on your browser's local storage
-            after submit so you do not have to type them every time.
-          </div>
           <div className="flex flex-col gap-2 p-2 md:flex-row">
             <div className="flex-1 flex-col">
               <input

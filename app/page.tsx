@@ -8,21 +8,16 @@ export default function Home() {
     <>
       <div>
         <div className="flex w-full flex-col">
-          <p></p> Hello! This site is being developed with a NextJS/TailwindCSS
-          to static export (html/js/css) pipeline with a Firebase Free-tier
-          NoSQL backend. Hopefully in the future I can make a database for A
-          crowd sourced database for results of the gardening on
-          Neopets-Classic.
+          <p></p> Welcome! This is a site to record a crowd sourced database for
+          results of the gardening on Neopets-Classic.
           <p>
             This project is purely for fun, for practicing backend stuff, and
-            for curiousity. I am aware that modifiers like fertilizer use, rare
-            item buffs, harvest time, and the use of fragment charms are not
-            tracked among any other variables that might affect the outcomes.
+            for curiousity.
           </p>
         </div>
         <div className="my-2 w-full bg-amber-200 pt-2 font-bold">
           <p className="pl-5">Submit your result</p>
-          <div className="mx-2 my-2 border-b-2 border-amber-500"></div>
+          <div className="my-2 border-b-2 border-amber-500"></div>
           <SubmissionForm></SubmissionForm>
         </div>
         <Suspense fallback={<p>Loading latest data...</p>}>
