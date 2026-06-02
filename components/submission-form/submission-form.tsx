@@ -70,8 +70,8 @@ export default function SubmissionForm() {
 
   const modifiers = watch("modifiers");
   const fragmentCharm = watch("fragmentCharm");
-  //Once the modifiers have loaded (hasLoadedModifiers), we should save them instead of accidentally saving [] from default values.
 
+  //Once the modifiers have loaded (hasLoadedModifiers), we should save them instead of accidentally saving [] from default values.
   useEffect(() => {
     if (!hasLoadedModifiers) return;
     saveModifiersToLocal(modifiers ?? []);
@@ -89,18 +89,8 @@ export default function SubmissionForm() {
     }
     try {
       const response = await uploadToFirebase(data);
-      setHasSubmitted(true);
-      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      reset({
-        seed: undefined,
-        item: "",
-        category: undefined,
-        fragment: undefined,
-        modifiers: data.modifiers,
-        fragmentCharm: data.fragmentCharm,
-      });
-      router.push(`/?refresh=${Date.now()}`);
+      await new Promise((resolve) => setTimeout(resolve, 500));
     } catch (error) {
       if (error instanceof FirebaseError) {
         setError("root", { message: error.message });
@@ -112,7 +102,19 @@ export default function SubmissionForm() {
               : "An unknown error occurred",
         });
       }
+      return;
     }
+    reset({
+      seed: "",
+      item: "",
+      category: "",
+      fragment: undefined,
+      modifiers: data.modifiers,
+      fragmentCharm: data.fragmentCharm,
+    });
+    setCurrentSeed(undefined);
+    setHasSubmitted(true);
+    router.push(`/?refresh=${Date.now()}`);
   };
   return (
     <form
@@ -120,12 +122,12 @@ export default function SubmissionForm() {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className={classes["seeds-list"]}>
-        {seeds.map((seed) => {
+        {seeds.map((uniqueSeed) => {
           return (
-            <label key={seed.name} className={`cursor-pointer`}>
+            <label key={uniqueSeed.name} className={`cursor-pointer`}>
               <Image
-                src={seed.path}
-                alt={seed.name}
+                src={uniqueSeed.path}
+                alt={uniqueSeed.name}
                 height={75}
                 width={75}
                 className={classes["seed-label"]}
@@ -134,9 +136,9 @@ export default function SubmissionForm() {
                 {...register("seed")}
                 type="radio"
                 disabled={isSubmitting}
-                value={seed.name}
+                value={uniqueSeed.name}
                 onChange={() => {
-                  setCurrentSeed(seed.name);
+                  setCurrentSeed(uniqueSeed.name);
                   setError("seed", { message: "" });
                   updateSuccessMessage();
                 }}
@@ -171,19 +173,19 @@ export default function SubmissionForm() {
       <div className="flex flex-col">
         <div className="flex flex-wrap justify-center gap-2">
           <p>Choose your category: </p>
-          {categories.map((category) => {
+          {categories.map((eachCategory) => {
             return (
               <label
                 className="flex cursor-pointer flex-row align-middle"
-                key={category}
+                key={eachCategory}
               >
                 <input
                   {...register("category")}
                   type="radio"
-                  value={category}
+                  value={eachCategory}
                   disabled={isSubmitting}
                 ></input>
-                {category}
+                {eachCategory}
               </label>
             );
           })}
@@ -209,21 +211,21 @@ export default function SubmissionForm() {
           <div className="flex flex-1 flex-row flex-wrap items-center justify-evenly">
             <label className="flex cursor-pointer flex-row gap-2">
               <input
-                type="radio"
-                disabled={isSubmitting}
-                {...register("fragment")}
-                value={"false"}
-              ></input>
-              <p>no</p>
-            </label>
-            <label className="flex cursor-pointer flex-row gap-2">
-              <input
                 disabled={isSubmitting}
                 type="radio"
                 {...register("fragment")}
                 value={"true"}
               ></input>
               <p>yes</p>
+            </label>
+            <label className="flex cursor-pointer flex-row gap-2">
+              <input
+                type="radio"
+                disabled={isSubmitting}
+                {...register("fragment")}
+                value={"false"}
+              ></input>
+              <p>no</p>
             </label>
           </div>
         </div>

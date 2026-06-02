@@ -45,30 +45,35 @@ export default function ViewSeedPage() {
       Looking up info on... {id}
       {isLoading && "LoadingData"}
       {!isLoading && seedData && (
-        <div className="flex flex-col md:flex-row">
-          <div className="flex flex-1">
-            <div className="flex w-full max-w-150 items-center justify-center">
-              {seedPath && (
-                <Image
-                  src={seedPath}
-                  alt={seedData.seed}
-                  width={64}
-                  height={64}
-                />
-              )}
+        <div className="flex flex-col">
+          {/*Main info */}
+          <div className="flex flex-col md:flex-row">
+            <div className="flex flex-1">
+              <div className="flex w-full max-w-150 items-center justify-center">
+                {seedPath && (
+                  <Image
+                    src={seedPath}
+                    alt={seedData.seed}
+                    width={64}
+                    height={64}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="flex flex-1 flex-col bg-zinc-100 p-2">
+              <h2 className="text-center text-2xl font-bold">Information</h2>
+              <div> Seed ID: {seedData.id}</div>
+              <div>Seed Type: {seedData.seed}</div>
+              <div>
+                Item: <span className="font-bold">{seedData.item}</span>
+              </div>
+              <div>
+                Submitted On: {seedData.createdAt.toDate().toLocaleString()}
+              </div>
             </div>
           </div>
-          <div className="flex flex-1 flex-col bg-zinc-100 p-2">
-            <h2 className="text-center text-2xl font-bold">Information</h2>
-            <div> Seed ID: {seedData.id}</div>
-            <div>Seed Type: {seedData.seed}</div>
-            <div>
-              Item: <span className="font-bold">{seedData.item}</span>
-            </div>
-            <div>
-              Submitted On: {seedData.createdAt.toDate().toLocaleString()}
-            </div>
-          </div>
+          {/*Modifier info */}
+          <div className="flex flex-1 bg-red-200"> I am modifier info</div>
         </div>
       )}
       {!isLoading && seedData && isRecent && (
