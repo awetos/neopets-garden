@@ -9,6 +9,7 @@ import Image from "next/image";
 import classes from "./main-table.module.css";
 import { getLatestTable } from "@/firebase/search/get-latest-table";
 import Link from "next/link";
+import { useSearchContext } from "@/context/SearchCache";
 
 export default function MainTable() {
   const router = useRouter();
@@ -28,8 +29,10 @@ export default function MainTable() {
     loadLatestData();
   }, [refreshKey]);
   console.log(latestData);
+  const searchContext = useSearchContext();
   return (
     <>
+      {searchContext && searchContext.testString}
       <table className="w-full table-fixed bg-amber-300">
         <colgroup>
           <col className="w-1/12" />

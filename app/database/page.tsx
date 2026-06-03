@@ -1,4 +1,9 @@
+"use client";
 import MainTable from "@/components/all-table/main-table";
+import {
+  SearchCacheContextProvider,
+  useSearchContext,
+} from "@/context/SearchCache";
 import { Suspense } from "react";
 
 export default function () {
@@ -10,7 +15,9 @@ export default function () {
         <p>View the last 20 submissions</p>
         <div className="bg-amber-400">
           <Suspense fallback={<p>Loading table ...</p>}>
-            <MainTable></MainTable>
+            <SearchCacheContextProvider>
+              <MainTable></MainTable>
+            </SearchCacheContextProvider>
           </Suspense>
         </div>
       </div>
