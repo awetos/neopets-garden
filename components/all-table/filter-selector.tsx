@@ -77,6 +77,7 @@ export default function FilterSelector() {
     }
     //redirect
 
+    //instead of redirecting here, we should call searchcontext.
     const newUrl = `/database?${newSearchParams.toString()}`;
     router.push(newUrl);
   }

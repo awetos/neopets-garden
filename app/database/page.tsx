@@ -9,7 +9,11 @@ export default function () {
     <>
       <div>
         <div className="flex flex-col gap-5">
-          <FilterSelector />
+          <Suspense fallback={<p>Loading selected filters...</p>}>
+            {" "}
+            <FilterSelector />
+          </Suspense>
+
           <p>View the last 20 submissions</p>
           <Suspense fallback={<p>Loading table ...</p>}>
             <MainTable></MainTable>

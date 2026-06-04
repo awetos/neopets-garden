@@ -5,9 +5,5 @@ export default function DatabaseLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <SearchCacheContextProvider>
-      <div>I'm the layout! {children}</div>
-    </SearchCacheContextProvider>
-  );
+  return <SearchCacheContextProvider>{children}</SearchCacheContextProvider>;
 }
