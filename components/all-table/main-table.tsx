@@ -21,18 +21,16 @@ export default function MainTable() {
 
   useEffect(() => {
     async function loadLatestData() {
+      console.log("Use effet loadLatestData has ran");
       const data = await getLatestTable();
       setLatestData(data);
       setIsLoading(false);
     }
-
     loadLatestData();
-  }, [refreshKey]);
-  console.log(latestData);
+  }, []);
   const searchContext = useSearchContext();
   return (
     <>
-      {searchContext && searchContext.testString}
       <table className="w-full table-fixed bg-amber-300">
         <colgroup>
           <col className="w-1/12" />

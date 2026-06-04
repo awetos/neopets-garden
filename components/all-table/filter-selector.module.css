@@ -1,0 +1,13 @@
+.seedSelector {
+  background-color: none;
+}
+.seedSelector:hover {
+  cursor: pointer;
+}
+.seedSelector[data-selected="on"] {
+  background-color: var(--color-amber-500);
+  color: white;
+}
+.seedSelector[data-selected="off"] {
+  border-bottom-color: var(--color-amber-200);
+}

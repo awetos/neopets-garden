@@ -28,7 +28,6 @@ export default function LatestTable() {
 
     loadLatestData();
   }, [refreshKey]);
-  console.log(latestData);
   return (
     <div>
       <table className="w-full">

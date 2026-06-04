@@ -1,7 +1,13 @@
+"use client";
+import { SearchCacheContextProvider } from "@/context/SearchCache";
 export default function DatabaseLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>I'm the layout! {children}</div>;
+  return (
+    <SearchCacheContextProvider>
+      <div>I'm the layout! {children}</div>
+    </SearchCacheContextProvider>
+  );
 }
