@@ -14,17 +14,32 @@ export default function FilterSelector() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [currentFilters, setCurrentFilters] = useState<SearchQuery>();
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { isSubmitting, isSubmitSuccessful, errors },
+  } = useForm<ItemSearch>({
+    defaultValues: {
+      itemName: currentFilters?.item ?? "",
+    },
+    resolver: zodResolver(ItemSearchSchema),
+  });
 
   const searchContext = useSearchContext();
   useEffect(() => {
     const currentParams: SearchQuery = {
       seeds: searchParams.getAll("seed"),
       category: searchParams.get("category") ?? "",
+      item: searchParams.get("item") ?? "",
     };
     setCurrentFilters(currentParams);
     searchContext.updateCurrentSearchQuery(currentParams);
+    //we use currentParams intead of currentFilter becasue currentFilter is a state that only updates on next render
+
+    setValue("itemName", currentParams?.item ?? "");
   }, []);
-  console.log("currentFilters:", currentFilters);
 
   function toggleSeed(selectedSeed: string) {
     //do not redirect yet, just build the search params.
@@ -63,24 +78,15 @@ export default function FilterSelector() {
       });
     }
   }
-  function runSearch() {
-    if (currentFilters) searchContext.runSearch(currentFilters);
-  }
+  const runSearch: SubmitHandler<ItemSearch> = (data) => {
+    if (currentFilters) {
+      if (data.itemName) {
+        currentFilters.item = data.itemName;
+      }
 
-  const {
-    register,
-    watch,
-    setValue,
-    handleSubmit,
-    setError,
-    reset,
-    formState: { isSubmitting, isSubmitSuccessful, errors },
-  } = useForm<ItemSearch>({
-    defaultValues: {
-      itemName: "",
-    },
-    resolver: zodResolver(ItemSearchSchema),
-  });
+      searchContext.runSearch(currentFilters);
+    }
+  };
 
   return (
     <div className="w-full bg-amber-200/50 p-2">
@@ -130,7 +136,7 @@ export default function FilterSelector() {
       <div className="pl-5 text-lg font-bold"> Item Search </div>
       <div className="mx-5 mb-2 border-b-2 border-amber-500"></div>
       <form>
-        <div className="flex flex-col items-center text-center md:flex-row">
+        <div className="flex flex-col items-center px-5 text-center md:flex-row">
           <div className="flex w-fit">
             <p>Search for an Item:</p>
           </div>
@@ -141,8 +147,8 @@ export default function FilterSelector() {
               type="text"
               className="mx-auto w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:mx-2 md:w-full"
               disabled={isSubmitting}
-            ></input>{" "}
-          </div>{" "}
+            ></input>
+          </div>
         </div>
         {errors.itemName?.message && (
           <div className="text-center text-sm font-normal text-red-500">
@@ -152,7 +158,8 @@ export default function FilterSelector() {
       </form>
       <div className="flex flex-row items-center justify-center">
         <div
-          className="m-2 w-sm max-w-full bg-amber-400 p-2 text-center"
+          className="m-5 w-sm max-w-full bg-amber-400 p-2 text-center hover:cursor-pointer"
+          //Handle submit will call the zod resolver, so if there are errors in input it appears. Otherwise, goahead and run search.
           onClick={handleSubmit(runSearch)}
         >
           Apply Filter

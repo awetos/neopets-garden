@@ -12,12 +12,8 @@ import Link from "next/link";
 
 //we can use the search params as sort of a save state so we don't have to have so many context providers.
 export default function MainTable() {
-  const router = useRouter();
-
   const [latestData, setLatestData] = useState<GardenResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const searchParams = useSearchParams();
-  const refreshKey = searchParams.get("refresh");
 
   useEffect(() => {
     async function loadLatestData() {
@@ -32,18 +28,19 @@ export default function MainTable() {
     <>
       <table className="w-full table-fixed bg-amber-300">
         <colgroup>
-          <col className="w-1/12" />
-          <col className="w-2/12" />
-          <col className="w-5/12" />
-          <col className="w-3/12" />
-          <col className="w-1/12" />
+          <col className="table-column w-1/8 md:w-1/12" />
+          <col className="hidden md:table-column md:w-2/12" />
+          <col className="table-column w-6/8 md:w-5/12" />
+          <col className="hidden md:table-column md:w-3/12" />
+          <col className="table-column w-1/8 md:w-1/12" />
         </colgroup>
+
         <thead>
           <tr>
             <th></th>
-            <th>Seed Name</th>
+            <th className="hidden md:table-cell">Seed Name</th>
             <th>Item</th>
-            <th>Category</th>
+            <th className="hidden md:table-cell">Category</th>
             <th>Frag</th>
           </tr>
         </thead>
@@ -78,7 +75,7 @@ export default function MainTable() {
                     {foundSeed && (
                       <Link
                         href={href}
-                        className="flex h-full w-full items-center justify-center"
+                        className="flex h-full w-full items-center justify-center bg-red-100"
                       >
                         <Image
                           src={foundSeed.clearPath}
@@ -91,10 +88,10 @@ export default function MainTable() {
                     )}
                   </td>
 
-                  <td>
+                  <td className="hidden md:table-cell">
                     <Link
                       href={href}
-                      className="flex h-full w-full items-center justify-center"
+                      className="hidden h-full w-full items-center justify-center bg-red-200 md:flex"
                     >
                       {data.seed}
                     </Link>
@@ -102,15 +99,15 @@ export default function MainTable() {
                   <td>
                     <Link
                       href={href}
-                      className="flex h-full w-full items-center justify-center"
+                      className="flex h-full w-full items-center justify-center bg-red-300"
                     >
                       {data.item}
                     </Link>
                   </td>
-                  <td>
+                  <td className="hidden md:table-cell">
                     <Link
                       href={href}
-                      className="flex h-full w-full items-center justify-center"
+                      className="hidden h-full w-full items-center justify-center bg-red-400 md:flex"
                     >
                       {data.category}
                     </Link>
@@ -118,7 +115,7 @@ export default function MainTable() {
                   <td>
                     <Link
                       href={href}
-                      className="flex h-full w-full items-center justify-center"
+                      className="flex h-full w-full items-center justify-center bg-red-500"
                     >
                       {data.fragment}
                     </Link>

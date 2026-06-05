@@ -79,7 +79,6 @@ export default function SubmissionForm() {
   }, [modifiers, fragmentCharm, hasLoadedModifiers]);
 
   const onSubmit: SubmitHandler<GardenSubmission> = async (data) => {
-    console.log("SUBMIT START", data);
     const result = GardenSubmissionSchema.safeParse(data);
 
     if (!result.success) {

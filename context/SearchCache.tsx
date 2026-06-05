@@ -60,9 +60,10 @@ export const SearchCacheContextProvider = ({
     if (newQuery?.category) {
       newSearchParams.set("category", newQuery?.category);
     }
+    if (newQuery?.item) {
+      newSearchParams.set("item", newQuery?.item);
+    }
     //redirect
-
-    //instead of redirecting here, we should call searchcontext.
     console.log("search cache has run a search");
     const newUrl = `/database?${newSearchParams.toString()}`;
     router.push(newUrl);
