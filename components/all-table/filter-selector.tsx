@@ -5,8 +5,11 @@ import classes from "./filter-selector.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSearchContext } from "@/context/SearchCache";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import { SearchQuery } from "@/context/SearchCache";
+import { ItemSearch, ItemSearchSchema } from "@/types/search";
 export default function FilterSelector() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -63,6 +66,22 @@ export default function FilterSelector() {
   function runSearch() {
     if (currentFilters) searchContext.runSearch(currentFilters);
   }
+
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    setError,
+    reset,
+    formState: { isSubmitting, isSubmitSuccessful, errors },
+  } = useForm<ItemSearch>({
+    defaultValues: {
+      itemName: "",
+    },
+    resolver: zodResolver(ItemSearchSchema),
+  });
+
   return (
     <div className="w-full bg-amber-200/50 p-2">
       <div className="pl-5 text-lg font-bold"> Filter By Seed</div>{" "}
@@ -108,10 +127,33 @@ export default function FilterSelector() {
           );
         })}
       </div>
+      <div className="pl-5 text-lg font-bold"> Item Search </div>
+      <div className="mx-5 mb-2 border-b-2 border-amber-500"></div>
+      <form>
+        <div className="flex flex-col items-center text-center md:flex-row">
+          <div className="flex w-fit">
+            <p>Search for an Item:</p>
+          </div>
+          <div className="flex w-full flex-1">
+            <input
+              {...register("itemName")}
+              autoComplete="off"
+              type="text"
+              className="mx-auto w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:mx-2 md:w-full"
+              disabled={isSubmitting}
+            ></input>{" "}
+          </div>{" "}
+        </div>
+        {errors.itemName?.message && (
+          <div className="text-center text-sm font-normal text-red-500">
+            {errors.itemName.message}
+          </div>
+        )}
+      </form>
       <div className="flex flex-row items-center justify-center">
         <div
           className="m-2 w-sm max-w-full bg-amber-400 p-2 text-center"
-          onClick={runSearch}
+          onClick={handleSubmit(runSearch)}
         >
           Apply Filter
         </div>
