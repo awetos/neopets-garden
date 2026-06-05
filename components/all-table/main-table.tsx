@@ -9,7 +9,6 @@ import Image from "next/image";
 import classes from "./main-table.module.css";
 import { getLatestTable } from "@/firebase/search/get-latest-table";
 import Link from "next/link";
-import { useSearchContext } from "@/context/SearchCache";
 
 //we can use the search params as sort of a save state so we don't have to have so many context providers.
 export default function MainTable() {

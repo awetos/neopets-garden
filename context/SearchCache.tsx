@@ -1,21 +1,26 @@
 //To save on reading 20+ reads from firebase per query, if the last search was within 20 minutes and the search query was the exact same, we just provide the saved context.
 //do not save to local storage because that would be mean (using up so much of their browser storage.)
+
+"use client";
 import { GardenResult } from "@/types/garden-result";
-import { createContext, useContext, useEffect, useState } from "react";
-import { categories } from "@/types/garden-result";
-import { Timestamp } from "firebase/firestore";
-type SearchQuery = {
+import { createContext, useContext, useState } from "react";
+import { useRouter } from "next/navigation";
+
+export type SearchQuery = {
   seeds?: string[];
   category?: string;
   item?: string;
 };
 
 type SearchContextType = {
-  latestSearch: SearchQuery | null;
+  lastQuery: SearchQuery | null;
   currentCache: GardenResult[];
-  testString: string;
+  searchCacheMessage: string;
+  updateCurrentSearchQuery: (newSearchQuery: SearchQuery) => void;
+  runSearch: (newQuery: SearchQuery) => Promise<any>;
 };
 
+//by allowing SearchCache Context to show up as null, we can get a warning if we are trying to access search context type outside of the provider.
 const SearchCacheContext = createContext<SearchContextType | null>(null);
 
 //define everything you promised would be in SearchContextType when mounting SearchCacheContextProvider
@@ -24,29 +29,67 @@ export const SearchCacheContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const latestSearch = null;
-  const testGardenResult: GardenResult = {
-    id: "12345",
-    item: "test item",
-    createdAt: Timestamp.fromDate(new Date()),
-    seed: "Maraquan Seed",
-    category: categories[0],
-    fragment: "false",
-    modifiers: ["", "", ""],
-    fragmentCharm: "true",
+  const router = useRouter();
+  const [lastQuery, setLastQuery] = useState<SearchQuery | null>(null);
+  const [currentCache, setCurrentCache] = useState<GardenResult[]>([]);
+  const [searchCacheMessage, setSearchCacheMessage] = useState("");
+
+  const updateCurrentSearchQuery = (newSearchQuery: SearchQuery) => {
+    console.log("updating query...", newSearchQuery);
+    setLastQuery(newSearchQuery);
   };
-  const currentCache: GardenResult[] = [testGardenResult];
+
+  // TO-DO (but might be redundant, idgaf atp):
+  // 1. check if cached query matches lastQuery
+  // 2. if fresh, i.e within 20 minutes, use currentCache
+  // 3. otherwise fetch from Firebase eg.  const data = await getLatestSubmissions();
+  const runSearch = async (newQuery: SearchQuery) => {
+    if (newQuery == lastQuery) {
+      console.log("You have previously run this query", newQuery);
+    } else {
+      console.log("The queries are not the same", newQuery);
+      setLastQuery(newQuery);
+    }
+    const newSearchParams = new URLSearchParams();
+    //for each seed in lastQuery.seed, add them to newSearchParams.set "seed"
+    if (newQuery?.seeds) {
+      newQuery.seeds.forEach((seed) => {
+        newSearchParams.append("seed", seed);
+      });
+    }
+    if (newQuery?.category) {
+      newSearchParams.set("category", newQuery?.category);
+    }
+    //redirect
+
+    //instead of redirecting here, we should call searchcontext.
+    console.log("search cache has run a search");
+    const newUrl = `/database?${newSearchParams.toString()}`;
+    router.push(newUrl);
+  };
 
   return (
     <SearchCacheContext.Provider
       value={{
-        latestSearch,
+        lastQuery,
         currentCache,
-        testString: "hello from search context!",
+        searchCacheMessage,
+        updateCurrentSearchQuery,
+        runSearch,
       }}
     >
       {children}
     </SearchCacheContext.Provider>
   );
 };
-export const useSearchContext = () => useContext(SearchCacheContext);
+export const useSearchContext = () => {
+  const context = useContext(SearchCacheContext);
+
+  if (!context) {
+    throw new Error(
+      "useSearchContext must be used inside SearchCacheContextProvider",
+    );
+  }
+
+  return context;
+};

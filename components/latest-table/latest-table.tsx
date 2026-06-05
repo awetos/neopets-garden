@@ -17,7 +17,6 @@ export default function LatestTable() {
   const [latestData, setLatestData] = useState<GardenResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
-  const refreshKey = searchParams.get("refresh");
 
   useEffect(() => {
     async function loadLatestData() {
@@ -25,9 +24,9 @@ export default function LatestTable() {
       setLatestData(data);
       setIsLoading(false);
     }
-
     loadLatestData();
-  }, [refreshKey]);
+  }, []);
+
   return (
     <div>
       <table className="w-full">

@@ -4,32 +4,29 @@ import { categories } from "@/types/garden-result";
 import classes from "./filter-selector.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-type SearchQuery = {
-  seeds: string[];
-  category: string;
-};
+import { useSearchContext } from "@/context/SearchCache";
+
+import { SearchQuery } from "@/context/SearchCache";
 export default function FilterSelector() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [currentFilters, setCurrentFilters] = useState<SearchQuery>();
 
+  const searchContext = useSearchContext();
   useEffect(() => {
-    function getCurrentSearchParams() {
-      const currentParams: SearchQuery = {
-        seeds: searchParams.getAll("seed"),
-        category: searchParams.get("category") ?? "",
-      };
-      setCurrentFilters(currentParams);
-      console.log("Current Params: ", currentParams);
-    }
-    getCurrentSearchParams();
+    const currentParams: SearchQuery = {
+      seeds: searchParams.getAll("seed"),
+      category: searchParams.get("category") ?? "",
+    };
+    setCurrentFilters(currentParams);
+    searchContext.updateCurrentSearchQuery(currentParams);
   }, []);
   console.log("currentFilters:", currentFilters);
+
   function toggleSeed(selectedSeed: string) {
     //do not redirect yet, just build the search params.
-
     //if the selected seed is in currentFilters.seeds, remove it; else, add it.
-    if (currentFilters?.seeds.includes(selectedSeed)) {
+    if (currentFilters?.seeds && currentFilters?.seeds.includes(selectedSeed)) {
       const newSeeds = currentFilters.seeds.filter(
         (seed) => seed !== selectedSeed,
       );
@@ -63,23 +60,8 @@ export default function FilterSelector() {
       });
     }
   }
-
   function runSearch() {
-    const newSearchParams = new URLSearchParams();
-    //for each seed in currentFilders.seed, add them to newSearchParams.set "seed"
-    if (currentFilters?.seeds) {
-      currentFilters.seeds.forEach((seed) => {
-        newSearchParams.append("seed", seed);
-      });
-    }
-    if (currentFilters?.category) {
-      newSearchParams.set("category", currentFilters?.category);
-    }
-    //redirect
-
-    //instead of redirecting here, we should call searchcontext.
-    const newUrl = `/database?${newSearchParams.toString()}`;
-    router.push(newUrl);
+    if (currentFilters) searchContext.runSearch(currentFilters);
   }
   return (
     <div className="w-full bg-amber-200/50 p-2">
@@ -92,7 +74,10 @@ export default function FilterSelector() {
               key={seed.name}
               className={`${classes.seedSelector} px-2`}
               data-selected={
-                currentFilters?.seeds.includes(seed.name) ? "on" : "off"
+                currentFilters?.seeds &&
+                currentFilters?.seeds.includes(seed.name)
+                  ? "on"
+                  : "off"
               }
               onClick={() => {
                 toggleSeed(seed.name);
