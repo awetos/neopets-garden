@@ -24,12 +24,14 @@ export default function LatestTable() {
     console.log("Refresh key changed:", refreshKey);
 
     async function loadLatestData() {
+      setIsLoading(true);
       console.log("Fetching latest data...");
 
       const data = await getLatestSubmissions();
 
       console.log("Received", data.length, "rows");
       setLatestData(data);
+      setIsLoading(false);
     }
 
     loadLatestData();
