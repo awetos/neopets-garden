@@ -17,7 +17,7 @@ export default function Home() {
         </div>
         <div className="my-2 bg-amber-200 pt-2 font-bold">
           <p className="pl-5">Submit your result</p>
-          <div className="my-2 border-b-2 border-amber-500"></div>
+          <div className="mx-5 my-2 border-b-2 border-amber-500"></div>
           <SubmissionForm></SubmissionForm>
         </div>
         <Suspense fallback={<p>Loading latest data...</p>}>
@@ -28,7 +28,7 @@ export default function Home() {
             <p>Latest Submissions</p>
           </div>
 
-          <div className="mb-2 border-b-2 border-amber-500"></div>
+          <div className="mx-5 mb-2 border-b-2 border-amber-500"></div>
 
           <Suspense fallback={<p>Loading latest submissions...</p>}>
             <LatestTable />
