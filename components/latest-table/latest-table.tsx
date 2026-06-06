@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { SearchQuery } from "@/context/SearchCache";
 
 //on mobile screens, render an ordered list.
 //on desktop screens, render a table
@@ -17,6 +18,7 @@ export default function LatestTable() {
   const [latestData, setLatestData] = useState<GardenResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
+  const refreshKey = searchParams.get("refresh");
 
   useEffect(() => {
     async function loadLatestData() {
@@ -24,9 +26,11 @@ export default function LatestTable() {
       setLatestData(data);
       setIsLoading(false);
     }
-    loadLatestData();
-  }, []);
 
+    loadLatestData();
+  }, [refreshKey]);
+
+  useEffect(() => {}, []);
   return (
     <div>
       <table className="w-full">

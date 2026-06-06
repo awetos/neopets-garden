@@ -34,9 +34,11 @@ export const SearchCacheContextProvider = ({
   const [currentCache, setCurrentCache] = useState<GardenResult[]>([]);
   const [searchCacheMessage, setSearchCacheMessage] = useState("");
 
+  //called upon loading the page by Filter.
   const updateCurrentSearchQuery = (newSearchQuery: SearchQuery) => {
     console.log("updating query...", newSearchQuery);
     setLastQuery(newSearchQuery);
+    //fetch this exact query from firebase to prepare the table.
   };
 
   // TO-DO (but might be redundant, idgaf atp):
