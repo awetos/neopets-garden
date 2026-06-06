@@ -136,7 +136,7 @@ export default function FilterSelector() {
       </div>
       <div className="pl-5 text-lg font-bold"> Item Search </div>
       <div className="mx-5 mb-2 border-b-2 border-amber-500"></div>
-      <form>
+      <form onSubmit={handleSubmit(runSearch)}>
         <div className="flex flex-col items-center px-5 text-center md:flex-row">
           <div className="flex w-fit">
             <p>Search for an Item:</p>
@@ -158,13 +158,12 @@ export default function FilterSelector() {
         )}
       </form>
       <div className="flex flex-row items-center justify-center">
-        <div
+        <button
+          type="submit"
           className="m-5 w-sm max-w-full bg-amber-400 p-2 text-center hover:cursor-pointer"
-          //Handle submit will call the zod resolver, so if there are errors in input it appears. Otherwise, goahead and run search.
-          onClick={handleSubmit(runSearch)}
         >
           Apply Filter
-        </div>
+        </button>
       </div>
     </div>
   );
