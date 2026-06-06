@@ -14,7 +14,10 @@ import {
   ModifiersDropdown,
   saveFragmentCharmToLocal,
 } from "./modifiers-dropdown";
-import { GardenSubmission } from "@/types/garden-submission";
+import {
+  GardenSubmission,
+  GardenSubmissionForm,
+} from "@/types/garden-submission";
 import { GardenSubmissionSchema } from "@/types/garden-submission";
 import {
   loadModifiersFromLocal,
@@ -32,7 +35,7 @@ export default function SubmissionForm() {
     setError,
     reset,
     formState: { isSubmitting, isSubmitSuccessful, errors },
-  } = useForm<GardenSubmission>({
+  } = useForm<GardenSubmissionForm>({
     defaultValues: {
       seed: "",
       item: "",
@@ -78,30 +81,21 @@ export default function SubmissionForm() {
     saveFragmentCharmToLocal(fragmentCharm ?? "");
   }, [modifiers, fragmentCharm, hasLoadedModifiers]);
 
-  const onSubmit: SubmitHandler<GardenSubmission> = async (data) => {
-    const result = GardenSubmissionSchema.safeParse(data);
-    if (!result.success) {
-      console.log(result.error);
+  //we need to reset form values to "" in order for the form ui to reset
+  //which means we need to include "" in the form schema
+  //but that means "" can accidentally end up passing, so we add back in our custom checks before we send it off to Firebase
+  const onSubmit: SubmitHandler<GardenSubmissionForm> = async (data) => {
+    const parsed = GardenSubmissionSchema.safeParse(data);
+
+    if (!parsed.success) {
       setError("root", { message: "Invalid data structure" });
       return;
     }
-    if (data.seed == "") {
-      setError("seed", { message: "You must select a seed." });
-      return;
-    }
-    if (data.category == "") {
-      setError("category", { message: "You must select a category" });
-      return;
-    }
-    if (data.fragment == "") {
-      setError("fragment", {
-        message: "You must select a fragment true or false",
-      });
-      return;
-    }
+
+    const validData = parsed.data;
 
     try {
-      const response = await uploadToFirebase(data);
+      const response = await uploadToFirebase(validData);
 
       await new Promise((resolve) => setTimeout(resolve, 500));
     } catch (error) {
@@ -132,7 +126,9 @@ export default function SubmissionForm() {
   return (
     <form
       className="flex flex-col gap-4 p-2 text-center"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, (errors) => {
+        console.log("submit blocked by errors:", errors);
+      })}
     >
       <div className={classes["seeds-list"]}>
         {seeds.map((uniqueSeed) => {

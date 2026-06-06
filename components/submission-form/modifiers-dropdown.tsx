@@ -1,5 +1,5 @@
 "use client";
-import { GardenSubmission } from "@/types/garden-submission";
+import { GardenSubmissionForm } from "@/types/garden-submission";
 import { useState } from "react";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { ChevronDown } from "lucide-react";
@@ -56,10 +56,10 @@ export const loadFragmentCharmFromLocal = (): "true" | "false" | "" => {
   }
 };
 type ModifiersInputProps = {
-  register: UseFormRegister<GardenSubmission>;
+  register: UseFormRegister<GardenSubmissionForm>;
   isSubmitting: boolean;
-  errors: FieldErrors<GardenSubmission>;
-  setValue: UseFormSetValue<GardenSubmission>;
+  errors: FieldErrors<GardenSubmissionForm>;
+  setValue: UseFormSetValue<GardenSubmissionForm>;
 };
 
 export function ModifiersDropdown({
