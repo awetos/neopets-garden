@@ -104,9 +104,9 @@ export default function SubmissionForm() {
       return;
     }
     reset({
-      seed: "",
+      seed: undefined,
       item: "",
-      category: "",
+      category: undefined,
       fragment: undefined,
       modifiers: data.modifiers,
       fragmentCharm: data.fragmentCharm,
