@@ -261,7 +261,10 @@ export default function SubmissionForm() {
           </div>
         )}
         {isSubmitSuccessful && hasSubmitted && (
-          <p className="font-normal text-green-800"> Submission successful!</p>
+          <p className="font-normal text-green-800">
+            Submission successful! You may need to refresh the page to see
+            changes.
+          </p>
         )}
       </div>
     </form>
