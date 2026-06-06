@@ -75,7 +75,10 @@ export const SearchCacheContextProvider = ({
       newSearchParams.set("item", newQuery?.item);
     }
     //redirect
-    console.log("search cache has run a search");
+    console.log(
+      "search cache has run a search, the new search params are",
+      newSearchParams.toString(),
+    );
     const newUrl = `/database?${newSearchParams.toString()}`;
 
     router.push(newUrl);

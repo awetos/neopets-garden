@@ -11,13 +11,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { SearchQuery } from "@/context/SearchCache";
 import { ItemSearch, ItemSearchSchema } from "@/types/search";
 export default function FilterSelector() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const searchParamsString = searchParams.toString();
   const [currentFilters, setCurrentFilters] = useState<SearchQuery>();
   const {
     register,
-    watch,
     setValue,
     handleSubmit,
     formState: { isSubmitting, isSubmitSuccessful, errors },
@@ -85,6 +83,7 @@ export default function FilterSelector() {
         setCurrentFilters(newFilters);
         searchContext.runSearch({ ...currentFilters, item: data.itemName });
       } else {
+        //it is possible the user removed the item name, but the currentFilters may still have them saved.
         searchContext.runSearch({ ...currentFilters, item: "" });
       }
     }
