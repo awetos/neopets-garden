@@ -34,11 +34,11 @@ export default function SubmissionForm() {
     formState: { isSubmitting, isSubmitSuccessful, errors },
   } = useForm<GardenSubmission>({
     defaultValues: {
-      seed: undefined,
+      seed: "",
       item: "",
-      category: undefined,
+      category: "",
       modifiers: [],
-      fragment: undefined,
+      fragment: "",
       fragmentCharm: "",
     },
     resolver: zodResolver(GardenSubmissionSchema),
@@ -80,12 +80,26 @@ export default function SubmissionForm() {
 
   const onSubmit: SubmitHandler<GardenSubmission> = async (data) => {
     const result = GardenSubmissionSchema.safeParse(data);
-
     if (!result.success) {
       console.log(result.error);
       setError("root", { message: "Invalid data structure" });
       return;
     }
+    if (data.seed == "") {
+      setError("seed", { message: "You must select a seed." });
+      return;
+    }
+    if (data.category == "") {
+      setError("category", { message: "You must select a category" });
+      return;
+    }
+    if (data.fragment == "") {
+      setError("fragment", {
+        message: "You must select a fragment true or false",
+      });
+      return;
+    }
+
     try {
       const response = await uploadToFirebase(data);
 
@@ -104,10 +118,10 @@ export default function SubmissionForm() {
       return;
     }
     reset({
-      seed: undefined,
+      seed: "",
       item: "",
-      category: undefined,
-      fragment: undefined,
+      category: "",
+      fragment: "",
       modifiers: data.modifiers,
       fragmentCharm: data.fragmentCharm,
     });

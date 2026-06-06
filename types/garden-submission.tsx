@@ -15,8 +15,8 @@ export const GardenSubmissionSchema = z.object({
   item: z
     .string()
     .min(3, "Item name cannot be empty and should be at least 3 characters"),
-  category: z.enum(categories, "Not a valid type"),
-  fragment: z.enum(["true", "false"]),
+  category: z.enum(categories, "Not a valid type").or(z.literal("")),
+  fragment: z.enum(["true", "false"]).or(z.literal("")),
   modifiers: z
     .array(modifierSchema)
     .max(3, "You cannot have more than 3 modifiers"),
