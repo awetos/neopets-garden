@@ -14,10 +14,7 @@ import {
   ModifiersDropdown,
   saveFragmentCharmToLocal,
 } from "./modifiers-dropdown";
-import {
-  GardenSubmission,
-  GardenSubmissionForm,
-} from "@/types/garden-submission";
+import { GardenSubmissionForm } from "@/types/garden-submission";
 import { GardenSubmissionSchema } from "@/types/garden-submission";
 import {
   loadModifiersFromLocal,
