@@ -48,5 +48,5 @@ export const GardenSubmissionSchema = z.object({
     .max(3, "You cannot have more than 3 modifiers"),
   fragmentCharm: z.enum(["true", "false"]).or(z.literal("")),
 });
-export type GardenSubmissionForm = z.input<typeof GardenSubmissionSchema>;
-export type GardenSubmissionSchema = z.output<typeof GardenSubmissionSchema>;
+export type GardenSubmissionForm = z.input<typeof GardenSubmissionSchema>; //things allowed on the form
+export type GardenSubmission = z.output<typeof GardenSubmissionSchema>; //shape used everywhere else as the final

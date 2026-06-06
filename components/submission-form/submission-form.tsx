@@ -15,7 +15,7 @@ import {
   saveFragmentCharmToLocal,
 } from "./modifiers-dropdown";
 import { GardenSubmissionForm } from "@/types/garden-submission";
-import { GardenSubmissionSchema } from "@/types/garden-submission";
+import { GardenSubmission } from "@/types/garden-submission";
 import {
   loadModifiersFromLocal,
   saveModifiersToLocal,
@@ -41,7 +41,7 @@ export default function SubmissionForm() {
       fragment: "",
       fragmentCharm: "",
     },
-    resolver: zodResolver(GardenSubmissionSchema),
+    resolver: zodResolver(GardenSubmission),
   });
 
   //reset the success message whenever a new seed is selected.
