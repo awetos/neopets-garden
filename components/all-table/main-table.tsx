@@ -3,29 +3,21 @@ import { GardenResult } from "@/types/garden-result";
 import { useEffect, useState } from "react";
 import { seeds } from "@/types/seeds";
 
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import classes from "./main-table.module.css";
 import { getLatestTable } from "@/firebase/search/get-latest-table";
 import Link from "next/link";
+import { useSearchContext } from "@/context/SearchCache";
 
 //we can use the search params as sort of a save state so we don't have to have so many context providers.
 export default function MainTable() {
-  const [latestData, setLatestData] = useState<GardenResult[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadLatestData() {
-      console.log("Use effet loadLatestData has ran");
-      const data = await getLatestTable();
-      setLatestData(data);
-      setIsLoading(false);
-    }
-    loadLatestData();
-  }, []);
+  const searchContext = useSearchContext();
+  const latestData = searchContext.currentCache;
   return (
     <>
+      {searchContext.isLoading && searchContext?.lastQuery?.item && (
+        <p>Last item was: {searchContext?.lastQuery?.item}</p>
+      )}
       <table className="w-full table-fixed bg-amber-300">
         <colgroup>
           <col className="table-column w-1/8 md:w-1/12" />
@@ -45,7 +37,7 @@ export default function MainTable() {
           </tr>
         </thead>
         <tbody>
-          {isLoading && (
+          {searchContext.isLoading && (
             <tr>
               <td colSpan={5} className="py-2 text-center">
                 Loading Submissions...
@@ -53,7 +45,7 @@ export default function MainTable() {
             </tr>
           )}
 
-          {!isLoading && latestData.length < 1 && (
+          {!searchContext.isLoading && latestData.length < 1 && (
             <tr>
               <td colSpan={5} className="py-2 text-center">
                 There are no submissions
@@ -61,7 +53,7 @@ export default function MainTable() {
             </tr>
           )}
 
-          {!isLoading &&
+          {!searchContext.isLoading &&
             latestData.map((data) => {
               const foundSeed = seeds.find((seed) => seed.name === data.seed);
               const href = `/view-seed?id=${data.id}`;
@@ -75,7 +67,7 @@ export default function MainTable() {
                     {foundSeed && (
                       <Link
                         href={href}
-                        className="flex h-full w-full items-center justify-center bg-red-100"
+                        className="flex h-full w-full items-center justify-center"
                       >
                         <Image
                           src={foundSeed.clearPath}
@@ -91,7 +83,7 @@ export default function MainTable() {
                   <td className="hidden md:table-cell">
                     <Link
                       href={href}
-                      className="hidden h-full w-full items-center justify-center bg-red-200 md:flex"
+                      className="hidden h-full w-full items-center justify-center md:flex"
                     >
                       {data.seed}
                     </Link>
@@ -99,7 +91,7 @@ export default function MainTable() {
                   <td>
                     <Link
                       href={href}
-                      className="flex h-full w-full items-center justify-center bg-red-300"
+                      className="flex h-full w-full items-center justify-center"
                     >
                       {data.item}
                     </Link>
@@ -107,7 +99,7 @@ export default function MainTable() {
                   <td className="hidden md:table-cell">
                     <Link
                       href={href}
-                      className="hidden h-full w-full items-center justify-center bg-red-400 md:flex"
+                      className="hidden h-full w-full items-center justify-center md:flex"
                     >
                       {data.category}
                     </Link>
@@ -115,7 +107,7 @@ export default function MainTable() {
                   <td>
                     <Link
                       href={href}
-                      className="flex h-full w-full items-center justify-center bg-red-500"
+                      className="flex h-full w-full items-center justify-center"
                     >
                       {data.fragment}
                     </Link>

@@ -48,7 +48,7 @@ export const uploadToFirebase = async (
 //converts multiple spaces into just 1
 //capitalizes the first letter if applicable
 //5 dubloon coin => 5 Dubloon Coin
-const normalizeItemName = (item: string): string => {
+export const normalizeItemName = (item: string): string => {
   return item
     .trim()
     .replace(/\s+/g, " ")

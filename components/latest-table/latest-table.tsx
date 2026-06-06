@@ -21,10 +21,15 @@ export default function LatestTable() {
   const refreshKey = searchParams.get("refresh");
 
   useEffect(() => {
+    console.log("Refresh key changed:", refreshKey);
+
     async function loadLatestData() {
+      console.log("Fetching latest data...");
+
       const data = await getLatestSubmissions();
+
+      console.log("Received", data.length, "rows");
       setLatestData(data);
-      setIsLoading(false);
     }
 
     loadLatestData();
@@ -61,10 +66,10 @@ export default function LatestTable() {
               </td>
             </tr>
           )}
-          {latestData.map((data, index) => {
+          {latestData.map((data) => {
             return (
               <tr
-                key={index}
+                key={data.id}
                 className="hover:cursor-pointer hover:bg-amber-400 hover:font-bold"
                 onClick={() => router.push(`/view-seed?id=${data.id}`)}
               >

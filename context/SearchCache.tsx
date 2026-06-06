@@ -5,6 +5,7 @@
 import { GardenResult } from "@/types/garden-result";
 import { createContext, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
+import { GetFromFirebase } from "@/firebase/search/filter-searched";
 
 export type SearchQuery = {
   seeds?: string[];
@@ -16,6 +17,7 @@ type SearchContextType = {
   lastQuery: SearchQuery | null;
   currentCache: GardenResult[];
   searchCacheMessage: string;
+  isLoading: true | false;
   updateCurrentSearchQuery: (newSearchQuery: SearchQuery) => void;
   runSearch: (newQuery: SearchQuery) => Promise<any>;
 };
@@ -33,12 +35,19 @@ export const SearchCacheContextProvider = ({
   const [lastQuery, setLastQuery] = useState<SearchQuery | null>(null);
   const [currentCache, setCurrentCache] = useState<GardenResult[]>([]);
   const [searchCacheMessage, setSearchCacheMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   //called upon loading the page by Filter.
-  const updateCurrentSearchQuery = (newSearchQuery: SearchQuery) => {
+  const updateCurrentSearchQuery = async (newSearchQuery: SearchQuery) => {
     console.log("updating query...", newSearchQuery);
+    setIsLoading(true);
+
     setLastQuery(newSearchQuery);
-    //fetch this exact query from firebase to prepare the table.
+    const searchResults = await GetFromFirebase(newSearchQuery);
+    console.log("Search results:", searchResults);
+
+    setCurrentCache(searchResults ?? []);
+    setIsLoading(false);
   };
 
   // TO-DO (but might be redundant, idgaf atp):
@@ -68,6 +77,7 @@ export const SearchCacheContextProvider = ({
     //redirect
     console.log("search cache has run a search");
     const newUrl = `/database?${newSearchParams.toString()}`;
+
     router.push(newUrl);
   };
 
@@ -75,6 +85,7 @@ export const SearchCacheContextProvider = ({
     <SearchCacheContext.Provider
       value={{
         lastQuery,
+        isLoading,
         currentCache,
         searchCacheMessage,
         updateCurrentSearchQuery,

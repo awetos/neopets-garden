@@ -13,6 +13,7 @@ import { ItemSearch, ItemSearchSchema } from "@/types/search";
 export default function FilterSelector() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const searchParamsString = searchParams.toString();
   const [currentFilters, setCurrentFilters] = useState<SearchQuery>();
   const {
     register,
@@ -39,7 +40,7 @@ export default function FilterSelector() {
     //we use currentParams intead of currentFilter becasue currentFilter is a state that only updates on next render
 
     setValue("itemName", currentParams?.item ?? "");
-  }, []);
+  }, [searchParamsString]);
 
   function toggleSeed(selectedSeed: string) {
     //do not redirect yet, just build the search params.
@@ -58,11 +59,6 @@ export default function FilterSelector() {
         category: currentFilters?.category ?? "",
       });
     }
-
-    console.log(
-      "toggle seed has ran, here are your current filters:\n",
-      currentFilters,
-    );
   }
 
   function toggleCategory(selectedCategory: string) {
@@ -81,10 +77,16 @@ export default function FilterSelector() {
   const runSearch: SubmitHandler<ItemSearch> = (data) => {
     if (currentFilters) {
       if (data.itemName) {
-        currentFilters.item = data.itemName;
+        const newFilters = {
+          ...currentFilters,
+          item: data.itemName,
+        };
+        //we cannot merely useState because it won't run right away, so we had to create this.
+        setCurrentFilters(newFilters);
+        searchContext.runSearch({ ...currentFilters, item: data.itemName });
+      } else {
+        searchContext.runSearch({ ...currentFilters, item: "" });
       }
-
-      searchContext.runSearch(currentFilters);
     }
   };
 
