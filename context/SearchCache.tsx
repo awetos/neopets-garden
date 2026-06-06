@@ -50,10 +50,9 @@ export const SearchCacheContextProvider = ({
     setIsLoading(false);
   };
 
-  // TO-DO (but might be redundant, idgaf atp):
-  // 1. check if cached query matches lastQuery
-  // 2. if fresh, i.e within 20 minutes, use currentCache
-  // 3. otherwise fetch from Firebase eg.  const data = await getLatestSubmissions();
+  // TO-DO (but might be redundant):
+  // Things are stored in the cache in case in the future reads are costly, for now this is not implemented.
+  // In case users run a read they've already run before within 20 minutes, they can fetch from their cache instead
   const runSearch = async (newQuery: SearchQuery) => {
     if (newQuery == lastQuery) {
       console.log("You have previously run this query", newQuery);
