@@ -11,7 +11,7 @@ const modifierSchema = z.union([
 
 //we let it be "" for seed and category so that the form radio buttons reset on submit.
 export const GardenSubmissionSchema = z.object({
-  seed: z.enum(seedNames, "You must select a seed"),
+  seed: z.enum(seedNames, "You must select a seed").or(z.literal("")),
   item: z
     .string()
     .min(3, "Item name cannot be empty and should be at least 3 characters"),
