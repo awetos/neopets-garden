@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { SearchQuery } from "@/context/SearchCache";
 
 //on mobile screens, render an ordered list.
 //on desktop screens, render a table
