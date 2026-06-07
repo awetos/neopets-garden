@@ -1,13 +1,11 @@
 "use client";
-import { GardenResult } from "@/types/garden-result";
-import { useEffect, useState } from "react";
 import { seeds } from "@/types/seeds";
 
 import Image from "next/image";
 import classes from "./main-table.module.css";
-import { getLatestTable } from "@/firebase/search/get-latest-table";
 import Link from "next/link";
 import { useSearchContext } from "@/context/SearchCache";
+import TablePagination from "./table-pagination";
 
 //we can use the search params as sort of a save state so we don't have to have so many context providers.
 export default function MainTable() {
@@ -117,6 +115,9 @@ export default function MainTable() {
             })}
         </tbody>
       </table>
+      <TablePagination hasNext={false} hasPrevious={true}></TablePagination>
+      <TablePagination hasNext={true} hasPrevious={false}></TablePagination>
+      <TablePagination hasNext={true} hasPrevious={true}></TablePagination>
     </>
   );
 }

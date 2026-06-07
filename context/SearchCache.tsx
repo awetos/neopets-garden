@@ -44,9 +44,9 @@ export const SearchCacheContextProvider = ({
 
     setLastQuery(newSearchQuery);
     const searchResults = await GetFromFirebase(newSearchQuery);
-    console.log("Search results:", searchResults);
+    console.log("Search results:", searchResults.results);
 
-    setCurrentCache(searchResults ?? []);
+    setCurrentCache(searchResults.results ?? []);
     setIsLoading(false);
   };
 
