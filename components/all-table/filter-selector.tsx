@@ -156,14 +156,15 @@ export default function FilterSelector() {
             {errors.itemName.message}
           </div>
         )}
-        <div className="flex flex-row items-center justify-center px-5">
+        <div className="flex flex-row items-center justify-center">
           <button
             type="submit"
-            className="my-5 w-full max-w-sm bg-amber-400 p-2 text-center hover:cursor-pointer"
+            className="m-5 w-sm max-w-full bg-amber-400 p-2 text-center hover:cursor-pointer"
+            //Handle submit will call the zod resolver, so if there are errors in input it appears. Otherwise, goahead and run search.
           >
             Apply Filter
           </button>
-        </div>
+        </div>{" "}
       </form>
     </div>
   );
