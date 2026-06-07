@@ -1,7 +1,23 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
-    <div className="flex min-h-16 w-full flex-row border-t-amber-500 bg-amber-400">
-      <p>Yay I'm a footer! Send me shit on Neopets!</p>
+    <div className="flex min-h-16 w-full flex-row flex-wrap items-center justify-end gap-5 border-t-amber-500 bg-amber-400 px-5">
+      <Link href="/about">
+        <div className="text-amber-600 hover:cursor-pointer hover:underline">
+          About
+        </div>
+      </Link>
+      <Link href="/contact">
+        <div className="text-amber-600 hover:cursor-pointer hover:underline">
+          Contact
+        </div>
+      </Link>
+      <Link href="/source">
+        <div className="text-amber-600 hover:cursor-pointer hover:underline">
+          Source Code
+        </div>
+      </Link>
     </div>
   );
 }

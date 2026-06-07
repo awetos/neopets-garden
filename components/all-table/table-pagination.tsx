@@ -25,7 +25,7 @@ export default function TablePagination({
         {hasNext && hasPrevious && hasBothNextAndPrev(goPrev, goNext)}
       </div>
       <div className="flex-1">
-        <div className="text-small text-center text-zinc-500">
+        <div className="text-center text-xs text-zinc-500 hover:underline">
           <Link href="/about">Why can't I see # of results or pages?</Link>
           {/*Links to page explaining cost and design decision*/}
         </div>

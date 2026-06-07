@@ -27,6 +27,7 @@ type SearchContextType = {
   currentPageIndex: number;
   updateCurrentSearchQuery: (newSearchQuery: SearchQuery) => void;
   runSearch: (newQuery: SearchQuery) => Promise<any>;
+  searchError: string | null;
 };
 
 //by allowing SearchCache Context to show up as null, we can get a warning if we are trying to access search context type outside of the provider.
@@ -55,27 +56,33 @@ export const SearchCacheContextProvider = ({
   >([undefined]);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
+  const [searchError, setSearchError] = useState<string | null>(null);
+
   //called upon loading the page by Filter, who reads from URL.
   const updateCurrentSearchQuery = async (newSearchQuery: SearchQuery) => {
     setIsLoading(true);
 
     setLastQuery(newSearchQuery);
     setCurrentPageIndex(0);
-    setPageCursors([]);
+    setPageCursors([undefined]);
 
     const searchResults = await GetFromFirebase(newSearchQuery);
-    setCurrentCache(searchResults.results ?? []);
-
-    setHasNext(searchResults.hasNextPage);
-    setHasPrev(false);
-    if (searchResults.lastDoc) {
-      setLastDoc(searchResults.lastDoc);
-    } else {
+    if (searchResults.error) {
+      setSearchError(searchResults.error);
+      setCurrentCache([]);
+      setHasNext(false);
+      setHasPrev(false);
       setLastDoc(undefined);
+      setIsLoading(false);
+    } else {
+      setSearchError(null);
+      setCurrentCache(searchResults.results ?? []);
+      setHasNext(searchResults.hasNextPage);
+      setHasPrev(false);
+      setLastDoc(searchResults.lastDoc ?? undefined);
+      setSearchCacheMessage(printQuery(newSearchQuery));
+      setIsLoading(false);
     }
-
-    setSearchCacheMessage(printQuery(newSearchQuery));
-    setIsLoading(false);
   };
 
   // OPTIONAL/TO-DO (but might not be necessary for now):
@@ -126,6 +133,9 @@ export const SearchCacheContextProvider = ({
     const searchResults = await GetFromFirebase(lastQuery, {
       lastDoc: nextCursor,
     });
+    if (searchResults.error) {
+      setSearchError(searchResults.error);
+    }
 
     setCurrentCache(searchResults.results);
     setHasNext(searchResults.hasNextPage);
@@ -152,7 +162,9 @@ export const SearchCacheContextProvider = ({
     const searchResults = prevCursor
       ? await GetFromFirebase(lastQuery, { lastDoc: prevCursor })
       : await GetFromFirebase(lastQuery);
-
+    if (searchResults.error) {
+      setSearchError(searchResults.error);
+    }
     setCurrentCache(searchResults.results);
     setHasNext(searchResults.hasNextPage);
     setLastDoc(searchResults.lastDoc ?? undefined);
@@ -178,6 +190,7 @@ export const SearchCacheContextProvider = ({
         runSearch,
         goNext,
         goPrev,
+        searchError,
       }}
     >
       {children}
