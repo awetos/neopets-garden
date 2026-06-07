@@ -13,8 +13,8 @@ export default function MainTable() {
   const latestData = searchContext.currentCache;
   return (
     <>
-      {searchContext.isLoading && searchContext?.lastQuery?.item && (
-        <p>Last item was: {searchContext?.lastQuery?.item}</p>
+      {!searchContext.isLoading && searchContext?.searchCacheMessage && (
+        <p> {searchContext.searchCacheMessage}</p>
       )}
       <table className="w-full table-fixed bg-amber-300">
         <colgroup>
@@ -115,9 +115,12 @@ export default function MainTable() {
             })}
         </tbody>
       </table>
-      <TablePagination hasNext={false} hasPrevious={true}></TablePagination>
-      <TablePagination hasNext={true} hasPrevious={false}></TablePagination>
-      <TablePagination hasNext={true} hasPrevious={true}></TablePagination>
+      <TablePagination
+        goPrev={searchContext.goPrev}
+        goNext={searchContext.goNext}
+        hasNext={searchContext.hasNext}
+        hasPrevious={searchContext.hasPrev}
+      ></TablePagination>
     </>
   );
 }

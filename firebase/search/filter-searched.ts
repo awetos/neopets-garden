@@ -17,7 +17,6 @@ import { GardenResult } from "@/types/garden-result";
 import { normalizeItemName } from "../upload/upload-submission";
 
 type SearchOptions = {
-  page?: number;
   lastDoc?: QueryDocumentSnapshot;
 };
 const PAGE_SIZE = 20;
@@ -30,15 +29,7 @@ export const GetFromFirebase = async (
 ) => {
   const submissionsRef = collection(db, "garden-submissions");
   const constraints: QueryConstraint[] = [];
-
-  if (options?.lastDoc) {
-    constraints.push(startAfter(options.lastDoc));
-  }
-
-  constraints.push(limit(PAGE_SIZE + 1));
-
   if (searchQuery.item) {
-    console.log("Searching for item, ", searchQuery.item);
     const normalizedItem = normalizeItemName(searchQuery.item);
 
     const itemRef = doc(db, "items", normalizedItem);
@@ -57,7 +48,6 @@ export const GetFromFirebase = async (
   }
 
   if (searchQuery.seeds && searchQuery.seeds.length > 0) {
-    console.log("searching for seed:", searchQuery.seeds);
     constraints.push(where("seed", "in", searchQuery.seeds));
   }
 
@@ -65,7 +55,15 @@ export const GetFromFirebase = async (
     constraints.push(where("category", "==", searchQuery.category));
   }
 
+  // orderBy BEFORE startAfter
   constraints.push(orderBy("createdAt", "desc"));
+
+  if (options?.lastDoc) {
+    constraints.push(startAfter(options.lastDoc));
+  }
+
+  // limit LAST
+  constraints.push(limit(PAGE_SIZE + 1));
 
   const q = query(collection(db, "garden-submissions"), ...constraints);
   const snapshot = await getDocs(q);
