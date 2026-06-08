@@ -14,7 +14,9 @@ export default function () {
             <FilterSelector />
           </Suspense>
 
-          <p>View the last 20 submissions</p>
+          <div className="w-full text-center">
+            <p>Viewing the last 20 submissions</p>
+          </div>
           <Suspense fallback={<p>Loading table ...</p>}>
             <MainTable></MainTable>
           </Suspense>

@@ -17,6 +17,22 @@ import { GardenResult } from "@/types/garden-result";
 import { normalizeItemName } from "../upload/upload-submission";
 import { FirebaseError } from "firebase/app";
 
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(
+        () =>
+          reject(
+            new Error(
+              "Upload timed out. Firebase may be overloaded or quota-limited.",
+            ),
+          ),
+        ms,
+      ),
+    ),
+  ]);
+}
 type SearchOptions = {
   lastDoc?: QueryDocumentSnapshot;
 };
@@ -35,8 +51,7 @@ export const GetFromFirebase = async (
       const normalizedItem = normalizeItemName(searchQuery.item);
 
       const itemRef = doc(db, "items", normalizedItem);
-      const itemSnap = await getDoc(itemRef);
-
+      const itemSnap = await withTimeout(getDoc(itemRef), 1000);
       if (!itemSnap.exists()) {
         return {
           results: [],
@@ -68,11 +83,13 @@ export const GetFromFirebase = async (
     constraints.push(limit(PAGE_SIZE + 1));
 
     const q = query(collection(db, "garden-submissions"), ...constraints);
-    const snapshot = await getDocs(q);
+
+    const snapshot = await withTimeout(getDocs(q), 10000);
     const docs = snapshot.docs;
     const hasNextPage = docs.length > PAGE_SIZE;
     const pageDocs = docs.slice(0, PAGE_SIZE);
-
+    console.log("Docs returned:", snapshot.docs.length);
+    console.log("From cache:", snapshot.metadata.fromCache);
     return {
       results: pageDocs.map((doc) => ({
         ...(doc.data() as GardenResult),
