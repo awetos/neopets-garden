@@ -92,12 +92,20 @@ export default function SubmissionForm() {
     const validData = parsed.data;
 
     try {
+      console.log("before upload");
       const response = await uploadToFirebase(validData);
+      console.log("after upload");
 
       await new Promise((resolve) => setTimeout(resolve, 500));
     } catch (error) {
+      console.log("CAUGHT IN FORM:", error);
+
+      setHasSubmitted(false);
+
       if (error instanceof FirebaseError) {
-        setError("root", { message: error.message });
+        setError("root", {
+          message: `${error.code}: ${error.message}`,
+        });
       } else {
         setError("root", {
           message:

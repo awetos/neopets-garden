@@ -17,12 +17,29 @@ In order to see the exact seed submissions that caused the item, we will need to
 This may be costly, but not overkill for now and allows us to continue development
 If it becomes overkill (eg. easily exceeding 10k reads a day) then we will move to a sql database then. 
 */
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(
+        () =>
+          reject(
+            new Error(
+              "Upload timed out. Firebase may be overloaded or quota-limited.",
+            ),
+          ),
+        ms,
+      ),
+    ),
+  ]);
+}
 
 export const uploadToFirebase = async (
   data: GardenSubmission,
-): Promise<any> => {
+): Promise<void> => {
   try {
     data.item = normalizeItemName(data.item);
+
     const batch = writeBatch(db);
 
     addGardenSubmissionToBatch(batch, data);
@@ -30,17 +47,11 @@ export const uploadToFirebase = async (
     addSeedsListToBatch(batch, data);
     addItemsListToBatch(batch, data);
 
-    await batch.commit();
+    await withTimeout(batch.commit(), 1000);
   } catch (error) {
-    if (error instanceof FirebaseError) {
-      throw new Error("Firebase upload failed: " + error.message);
-    }
-
-    if (error instanceof Error) {
-      throw error;
-    }
-
-    throw new Error("Something went wrong with submission.");
+    throw error instanceof Error
+      ? error
+      : new Error("Something went wrong with submission.");
   }
 };
 

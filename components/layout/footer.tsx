@@ -13,9 +13,9 @@ export default function Footer() {
           Contact
         </div>
       </Link>
-      <Link href="/source">
+      <Link href="/tester">
         <div className="text-amber-600 hover:cursor-pointer hover:underline">
-          Source Code
+          Tester
         </div>
       </Link>
     </div>
