@@ -3,14 +3,11 @@ import { useEffect, useState } from "react";
 
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { AllStatsStructure, getLatestStats } from "@/firebase/get-stats";
 
 //o\\
 
 export default function AllStatsPreview() {
-  const router = useRouter();
-
   const [latestStats, setLatestStats] = useState<AllStatsStructure | null>(
     null,
   );
