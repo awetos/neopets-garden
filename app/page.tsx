@@ -2,6 +2,7 @@ import SubmissionForm from "@/components/submission-form/submission-form";
 import LatestTable from "@/components/latest-table/latest-table";
 import { Suspense } from "react";
 import AllStatsPreview from "@/components/all-stats/stats-preview";
+import Loading from "@/components/loading";
 
 export default function Home() {
   return (

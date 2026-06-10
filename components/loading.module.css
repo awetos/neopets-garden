@@ -1,0 +1,21 @@
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fading-loader;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 2s;
+}
+
+@keyframes fading-loader {
+  0% {
+    color: var(--color-zinc-400);
+  }
+  50% {
+    color: var(--color-zinc-900);
+  }
+  100% {
+    color: var(--color-zinc-400);
+  }
+}

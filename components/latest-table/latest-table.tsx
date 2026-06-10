@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Loading from "../loading";
 
 //on mobile screens, render an ordered list.
 //on desktop screens, render a table
@@ -28,6 +29,8 @@ export default function LatestTable() {
 
       const data = await getLatestSubmissions();
 
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+
       console.log("Received", data.length, "rows");
       setLatestData(data);
       setIsLoading(false);
@@ -36,7 +39,6 @@ export default function LatestTable() {
     loadLatestData();
   }, [refreshKey]);
 
-  useEffect(() => {}, []);
   return (
     <div>
       <table className="w-full">
@@ -56,7 +58,7 @@ export default function LatestTable() {
           {isLoading && (
             <tr>
               <td colSpan={3} className="py-2 text-center">
-                Loading Submissions...
+                <Loading text={"Loading latest submissions..."} />
               </td>
             </tr>
           )}
