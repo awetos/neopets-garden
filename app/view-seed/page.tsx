@@ -9,6 +9,8 @@ import Image from "next/image";
 import { deleteSeedById } from "@/firebase/delete/delete-by-transaction";
 import { Timestamp } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
+import Loading from "@/components/loading";
+import Heading from "@/components/about/heading";
 
 export default function ViewSeedPage() {
   const searchParams = useSearchParams();
@@ -27,6 +29,7 @@ export default function ViewSeedPage() {
         setIsLoading(false);
       }
       const seedResult = await getSeedById(id ? id : "");
+
       if (seedResult) {
         setSeedData(seedResult as GardenResult);
         const foundSeed = seeds.find((seed) => seed.name === seedResult.seed);
@@ -51,8 +54,8 @@ export default function ViewSeedPage() {
 
   return (
     <div>
-      Looking up info on... {id}
-      {isLoading && "LoadingData"}
+      <Heading title="Seed Details" />
+      {isLoading && <Loading text={`Loading information on ${id}`}></Loading>}
       {!isLoading && seedData && (
         <div className="flex flex-col">
           {/*Main info */}
@@ -77,14 +80,21 @@ export default function ViewSeedPage() {
                 Item: <span className="font-bold">{seedData.item}</span>
               </div>
               <div>
+                Has Fragment?:{" "}
+                {seedData.fragment === "true" ? (
+                  <span className="text-green-800">yes</span>
+                ) : (
+                  <span className="text-red-500">no</span>
+                )}
+              </div>
+              <div>
                 Submitted On: {seedData.createdAt.toDate().toLocaleString()}
               </div>
             </div>
           </div>
           {/*Modifier info */}
           <div className="flex flex-1 flex-col">
-            <div className="mt-5 pl-5 text-lg font-bold">Modifier Info</div>
-            <div className="mx-5 border border-b-amber-500"></div>
+            <Heading title="Modifier Info" />
 
             {hasExtraData ? (
               <table className="w-full table-auto">
@@ -149,7 +159,7 @@ export default function ViewSeedPage() {
       <div className="text-center">{deletionResult}</div>
       {!isLoading && !seedData && (
         <div>
-          <p>No information found on this seed.</p>
+          <p>No information found on seed {id}.</p>
         </div>
       )}
     </div>
