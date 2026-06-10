@@ -13,11 +13,6 @@ export default function Footer() {
           Contact
         </div>
       </Link>
-      <Link href="/tester">
-        <div className="text-amber-600 hover:cursor-pointer hover:underline">
-          Tester
-        </div>
-      </Link>
     </div>
   );
 }
