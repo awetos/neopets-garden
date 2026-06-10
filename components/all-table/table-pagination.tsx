@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 type TablePaginationProps = {
+  currentPage: number;
   hasNext: true | false;
   hasPrevious: true | false;
   goNext: () => void;
@@ -12,6 +13,7 @@ type TablePaginationProps = {
 //if hasPrevious is true, render previous on the far left.
 //if both are true, render both buttons
 export default function TablePagination({
+  currentPage,
   hasNext,
   hasPrevious,
   goNext,
@@ -21,8 +23,10 @@ export default function TablePagination({
     <div className="flex w-full flex-col">
       <div className="flex-1">
         {hasNext && !hasPrevious && hasNextOnly(goNext)}
-        {!hasNext && hasPrevious && hasPrevOnly(goPrev)}
-        {hasNext && hasPrevious && hasBothNextAndPrev(goPrev, goNext)}
+        {!hasNext && hasPrevious && hasPrevOnly(currentPage, goPrev)}
+        {hasNext &&
+          hasPrevious &&
+          hasBothNextAndPrev(currentPage, goPrev, goNext)}
       </div>
       <div className="flex-1">
         <div className="text-center text-xs text-zinc-500 hover:underline">
@@ -36,9 +40,11 @@ export default function TablePagination({
 
 function hasNextOnly(goNext: () => void) {
   return (
-    <div className="flex flex-row justify-end">
+    <div className="flex flex-row justify-evenly">
+      <div className="flex-1 px-5 py-2"></div>
+      <div className="flex-1 px-5 py-2 text-center md:flex-3">Page 1</div>
       <div
-        className="bg-amber-400 px-5 py-2 hover:cursor-pointer"
+        className="flex-1 bg-amber-400 px-5 py-2 text-center hover:cursor-pointer"
         onClick={() => goNext()}
       >
         Next
@@ -46,29 +52,40 @@ function hasNextOnly(goNext: () => void) {
     </div>
   );
 }
-function hasPrevOnly(goPrev: () => void) {
+function hasPrevOnly(currentPage: number, goPrev: () => void) {
   return (
-    <div className="flex flex-row justify-start">
+    <div className="flex flex-row justify-evenly">
       <div
-        className="bg-amber-400 px-5 py-2 hover:cursor-pointer"
+        className="flex-1 bg-amber-400 px-5 py-2 text-center hover:cursor-pointer"
         onClick={() => goPrev()}
       >
         Prev
       </div>
+      <div className="flex-1 px-5 py-2 text-center md:flex-3">
+        Page {currentPage + 1}
+      </div>
+      <div className="flex-1 px-5 py-2 text-center"></div>
     </div>
   );
 }
-function hasBothNextAndPrev(goPrev: () => void, goNext: () => void) {
+function hasBothNextAndPrev(
+  currentPage: number,
+  goPrev: () => void,
+  goNext: () => void,
+) {
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-evenly">
       <div
-        className="bg-amber-400 px-5 py-2 hover:cursor-pointer"
+        className="flex-1 bg-amber-400 px-5 py-2 text-center hover:cursor-pointer"
         onClick={() => goPrev()}
       >
         Prev
-      </div>{" "}
+      </div>
+      <div className="flex-1 px-5 py-2 text-center md:flex-3">
+        Page {currentPage + 1}
+      </div>
       <div
-        className="bg-amber-400 px-5 py-2 hover:cursor-pointer"
+        className="flex-1 bg-amber-400 px-5 py-2 text-center hover:cursor-pointer"
         onClick={() => goNext()}
       >
         Next

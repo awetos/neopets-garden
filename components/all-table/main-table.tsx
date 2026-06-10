@@ -21,8 +21,8 @@ export default function MainTable() {
         <table className="w-full table-fixed bg-amber-300">
           <colgroup>
             <col className="table-column w-1/8 md:w-1/12" />
-            <col className="hidden md:table-column md:w-2/12" />
-            <col className="table-column w-6/8 md:w-5/12" />
+            <col className="hidden md:table-column md:w-3/12" />
+            <col className="table-column w-6/8 md:w-4/12" />
             <col className="hidden md:table-column md:w-3/12" />
             <col className="table-column w-1/8 md:w-1/12" />
           </colgroup>
@@ -129,6 +129,7 @@ export default function MainTable() {
         </table>
       )}
       <TablePagination
+        currentPage={searchContext.currentPageIndex}
         goPrev={searchContext.goPrev}
         goNext={searchContext.goNext}
         hasNext={searchContext.hasNext}
