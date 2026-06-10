@@ -26,6 +26,7 @@ export default function AllStatsPreview() {
 
     loadLatestStats();
   }, [refreshKey]);
+  //
 
   return (
     <div>

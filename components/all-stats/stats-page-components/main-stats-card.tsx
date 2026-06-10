@@ -4,57 +4,76 @@ import { useEffect, useState } from "react";
 const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
 import { AllStatsStructure, getLatestStats } from "@/firebase/get-stats";
+import Loading from "@/components/loading";
 
-export default function MainStatsCard() {
+//o\\
+
+export default function AllStatsPreview() {
   const [latestStats, setLatestStats] = useState<AllStatsStructure | null>(
     null,
   );
+  const [seedEntries, setSeedEntries] = useState<[string, number][]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
   const refreshKey = searchParams.get("refresh");
 
   useEffect(() => {
     async function loadLatestStats() {
+      await new Promise((resolve) => setTimeout(resolve, 2300));
       const stats_data = await getLatestStats();
       if (stats_data) {
         setLatestStats(stats_data);
+        if (stats_data.seeds && Object.keys(stats_data.seeds).length > 0) {
+          const seedEntriesTemp = Object.entries(stats_data.seeds ?? {});
+
+          //compare the key in each item in the array
+          //if b is greater than a, put b first.
+          seedEntriesTemp.sort(([, a], [, b]) => b - a);
+          setSeedEntries(seedEntriesTemp);
+        }
       }
       setIsLoading(false);
     }
 
     loadLatestStats();
   }, [refreshKey]);
-
-  return (
-    <div>
-      {!isLoading && latestStats && (
-        <div className="flex flex-row flex-wrap justify-evenly text-center text-sm font-semibold">
-          <div>
-            <p>
-              {latestStats.totalSeeds.toLocaleString()} total seeds submitted
-            </p>
-          </div>
-          <div>
-            <p>---</p>
-          </div>
-          <div>
-            <p>
-              {latestStats.totalFragments.toLocaleString()} fragments received
-            </p>
-          </div>
-          <div>
-            <p>---</p>
-          </div>
-          <div>
-            <p>
-              fragment drop rate:{" "}
+  // {latestStats.totalSeeds.toLocaleString()} total seeds submitted
+  //  {latestStats.totalFragments.toLocaleString()} fragments received
+  /* fragment drop rate:{" "}
               {(
                 (latestStats.totalFragments / latestStats.totalSeeds) *
                 100
               ).toFixed(2)}
               %
-            </p>
+  */
+
+  return (
+    <div>
+      {isLoading && <Loading text="Loading global stats" />}
+      {!isLoading && latestStats && (
+        <div className="flex flex-col overflow-hidden rounded-xl bg-amber-100 px-5 py-2 text-center">
+          <div className="w-full">
+            <span className="font-semibold">Total seeds submitted: </span>
+            {latestStats.totalSeeds.toLocaleString()}
           </div>
+          <div className="w-full">
+            <span className="font-semibold"> Total fragments received: </span>
+            {latestStats.totalFragments.toLocaleString()}{" "}
+          </div>
+          <div className="w-full">
+            <span className="font-semibold"> Fragment droprate: </span>
+            {(
+              (latestStats.totalFragments / latestStats.totalSeeds) *
+              100
+            ).toFixed(2)}
+            %
+          </div>
+          {seedEntries && seedEntries.length > 0 && (
+            <div className="w-full">
+              <span className="font-semibold"> Most popular seed: </span>
+              {seedEntries[0][0]} ({seedEntries[0][1]})
+            </div>
+          )}
         </div>
       )}
     </div>
