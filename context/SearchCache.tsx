@@ -67,6 +67,7 @@ export const SearchCacheContextProvider = ({
     setPageCursors([undefined]);
 
     const searchResults = await GetFromFirebase(newSearchQuery);
+
     if (searchResults.error) {
       setSearchError(searchResults.error);
       setCurrentCache([]);

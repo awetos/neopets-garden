@@ -29,8 +29,6 @@ export default function LatestTable() {
 
       const data = await getLatestSubmissions();
 
-      await new Promise((resolve) => setTimeout(resolve, 2500));
-
       console.log("Received", data.length, "rows");
       setLatestData(data);
       setIsLoading(false);

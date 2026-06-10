@@ -6,6 +6,7 @@ import classes from "./main-table.module.css";
 import Link from "next/link";
 import { useSearchContext } from "@/context/SearchCache";
 import TablePagination from "./table-pagination";
+import Loading from "../loading";
 
 //we can use the search params as sort of a save state so we don't have to have so many context providers.
 export default function MainTable() {
@@ -40,7 +41,7 @@ export default function MainTable() {
             {searchContext.isLoading && (
               <tr>
                 <td colSpan={5} className="py-2 text-center">
-                  Loading Submissions...
+                  <Loading text="Loading submissions..." />
                 </td>
               </tr>
             )}
