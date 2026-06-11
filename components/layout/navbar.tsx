@@ -12,6 +12,9 @@ export default function Navbar() {
       <Link href={"/stats"}>
         <div className={classes["navbutton"]}>Stats</div>
       </Link>
+      <Link href={"/fertilizer"}>
+        <div className={classes["navbutton"]}>How To Get Fertilizer</div>
+      </Link>
     </div>
   );
 }
