@@ -90,7 +90,7 @@ export default function FilterSelector() {
   };
 
   return (
-    <div className="w-full bg-amber-200/50 p-2">
+    <div className="w-full overflow-hidden rounded-lg bg-amber-200/50 p-2">
       <div className="pl-5 text-lg font-bold"> Filter By Seed</div>{" "}
       <div className="mx-5 mb-2 border-b-2 border-amber-500"></div>
       <div className="flex flex-wrap items-center justify-center gap-2">

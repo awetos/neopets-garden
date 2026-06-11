@@ -3,6 +3,7 @@ import { getSeedsStats } from "@/firebase/get-seed-stats";
 import { SeedStat } from "@/types/garden-result";
 import { useEffect, useState } from "react";
 import SeedCard from "./seed-card";
+import Loading from "@/components/loading";
 
 export default function AllSeedsContainer() {
   const [isLoading, setIsLoading] = useState<true | false>(true);
@@ -21,7 +22,7 @@ export default function AllSeedsContainer() {
 
   return (
     <>
-      {isLoading && "Loading"}
+      {isLoading && <Loading text="Loading Individual Seed Info..."></Loading>}
       {!isLoading && allSeeds && allSeeds.length > 0 && (
         <>
           <div className="pl-5">

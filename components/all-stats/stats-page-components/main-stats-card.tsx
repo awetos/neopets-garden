@@ -5,6 +5,7 @@ const { formatDistance } = require("date-fns");
 import { useSearchParams } from "next/navigation";
 import { AllStatsStructure, getLatestStats } from "@/firebase/get-stats";
 import Loading from "@/components/loading";
+import Heading from "@/components/about/heading";
 
 //o\\
 
@@ -69,13 +70,33 @@ export default function AllStatsPreview() {
             %
           </div>
           {seedEntries && seedEntries.length > 0 && (
-            <div className="w-full">
-              <span className="font-semibold"> Most popular seed: </span>
-              {seedEntries[0][0]} ({seedEntries[0][1]})
-            </div>
+            <>
+              <div className="w-full">
+                <span className="font-semibold">Most popular seed:</span>{" "}
+                {seedEntries[0][0]} ({seedEntries[0][1]})
+              </div>
+              <div className="my-2 border-b-2 border-amber-400 px-2"></div>
+              <div className="w-full text-sm">
+                {seedEntries.map(([seed, count], index) => (
+                  <span key={seed}>
+                    <span className="font-semibold">{seed}</span> ({count})
+                    {index < seedEntries.length - 1 ? ", " : ""}
+                  </span>
+                ))}
+              </div>
+            </>
           )}
         </div>
       )}
+    </div>
+  );
+}
+//seedEntries: [string, number][]
+function getSeedAmount(seedEntry: [string, number]) {
+  return (
+    <div key={seedEntry[0]} className="flex gap-1">
+      <span className="font-semibold">{seedEntry[0]}</span>
+      <span>({seedEntry[1]})</span>
     </div>
   );
 }
