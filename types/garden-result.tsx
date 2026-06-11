@@ -22,3 +22,8 @@ export type GardenResult = {
   modifiers: string[] | null;
   fragmentCharm: string;
 };
+export type CategoryName = (typeof categories)[number];
+export type SeedStat = {
+  seed: string;
+  stats: { fragment?: number } & Partial<Record<CategoryName, number>>;
+};
