@@ -6,6 +6,13 @@ import Image from "next/image";
 
 export default function SeedCard(currentSeed: SeedStat) {
   const [seedPath, setSeedPath] = useState<string>();
+  useEffect(() => {
+    function findSeedImage() {
+      const foundSeed = seeds.find((seed) => seed.name === currentSeed.seed);
+      setSeedPath(foundSeed?.path);
+    }
+    findSeedImage();
+  }, []);
 
   return (
     <div className="bg-amber-100">
@@ -41,3 +48,14 @@ export type SeedList = {
   fragments?: number;
 } & Partial<Record<(typeof categories)[number], number>>;
 */
+
+//iterate through all the categories and add the sum of the number
+function GetTotalSeeds(currentSeed: SeedStat): number {
+  const { fragments, ...categoryStats } = currentSeed.stats;
+
+  return Object.values(categoryStats).reduce(
+    (sum, value) => sum + (value ?? 0),
+    0,
+  );
+  return 0;
+}
