@@ -1,5 +1,6 @@
 import { seeds } from "@/types/seeds";
 import { Timestamp } from "firebase/firestore";
+import { SeedList } from "./garden-submission";
 
 export const seedNames = seeds.map((seed) => seed.name);
 
@@ -25,5 +26,5 @@ export type GardenResult = {
 export type CategoryName = (typeof categories)[number];
 export type SeedStat = {
   seed: string;
-  stats: { fragment?: number } & Partial<Record<CategoryName, number>>;
+  stats: SeedList;
 };

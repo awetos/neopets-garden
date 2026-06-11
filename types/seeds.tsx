@@ -54,4 +54,9 @@ export const seeds = [
     path: "/images/seeds/negg_seed.png",
     clearPath: "/images/seeds/clear/negg_seed.png",
   },
+  {
+    name: "Clover Seed",
+    path: "/images/seeds/clover_seed.png",
+    clearPath: "/images/seeds/clear/clover_seed.png",
+  },
 ] as const;
