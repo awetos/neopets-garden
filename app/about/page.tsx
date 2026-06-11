@@ -53,6 +53,15 @@ export default function About() {
         1,234 results would become 1,234 reads, because Firebase "walks" through
         all the documents. If there is a way around that, please contact me.
       </p>
+      <Heading title="Can I suggest adding a seed or category?"></Heading>
+      <p>
+        Yes! It should be fairly easy to add a new category or seed based on how
+        it's structured.
+      </p>
+      <p>
+        I did not include fertilizer use as a field because I do not think it
+        affects the drop rates.
+      </p>
     </div>
   );
 }
