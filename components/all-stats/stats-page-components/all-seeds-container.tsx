@@ -25,7 +25,7 @@ export default function AllSeedsContainer() {
       {!isLoading && allSeeds && allSeeds.length > 0 && (
         <>
           <div>{allSeeds.length} seed types in the database</div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="px-large grid w-full grid-cols-1 gap-2 md:grid-cols-2 md:p-0">
             {allSeeds.map((seed) => (
               <SeedCard key={seed.seed} seed={seed.seed} stats={seed.stats} />
             ))}
