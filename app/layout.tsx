@@ -31,13 +31,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body>
-        <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-amber-100">
-          <Navbar></Navbar>
-          <div
-            className={`md:p-large mx-0 w-full max-w-full border-0 bg-amber-50 p-2 md:mx-auto md:my-2 md:max-w-3xl md:border-2 md:border-amber-300`}
-          >
+        <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-[url('/images/background/background_temp.png')] bg-cover bg-fixed bg-center">
+          <Navbar />
+
+          <div className="md:p-large mx-0 w-full max-w-full border-0 bg-amber-50/90 p-2 md:mx-auto md:my-2 md:max-w-3xl md:border-2 md:border-black">
             <main>{children}</main>
           </div>
+
           <Footer />
         </div>
       </body>
