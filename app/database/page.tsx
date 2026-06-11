@@ -14,12 +14,17 @@ export default function () {
             <FilterSelector />
           </Suspense>
 
-          <div className="w-full text-center">
-            <p>Viewing the last 20 submissions</p>
-          </div>
           <Suspense fallback={<p>Loading table ...</p>}>
             <MainTable></MainTable>
           </Suspense>
+          <div className="text-sm text-zinc-500">
+            <p>
+              Footnote: Results do not reflect the real proportion of the drop
+              rate per category because users might not submit every garden
+              result and only submit the interesting ones. Treat the results as
+              a simply a reference for the potential item pool.
+            </p>
+          </div>
         </div>
       </div>
     </>

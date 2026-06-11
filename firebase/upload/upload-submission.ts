@@ -61,6 +61,7 @@ export const uploadToFirebase = async (
 //5 dubloon coin => 5 Dubloon Coin
 export const normalizeItemName = (item: string): string => {
   return item
+    .replace(/!/g, "")
     .trim()
     .replace(/\s+/g, " ")
     .split(" ")

@@ -15,7 +15,9 @@ export default function MainTable() {
   return (
     <>
       {!searchContext.isLoading && searchContext?.searchCacheMessage && (
-        <p> {searchContext.searchCacheMessage}</p>
+        <div className="text-center">
+          <p> {searchContext.searchCacheMessage}</p>
+        </div>
       )}
       {searchContext.searchError && <p>{searchContext.searchError}</p>}
       {!searchContext.searchError && (

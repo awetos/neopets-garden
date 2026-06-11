@@ -212,19 +212,28 @@ export const useSearchContext = () => {
 
 export const printQuery = (query: SearchQuery | null): string => {
   if (!query) {
-    return "";
+    return "Viewing the last 20 submissions";
   }
-  let message: string = "Searching for ";
-  if (query.seeds) {
-    query.seeds.forEach((seed) => {
-      message += seed + "s ";
-    });
+  if (!query.item) {
+    if (!query.category) {
+      if (!query.seeds || query.seeds.length == 0) {
+        return "Viewing the last 20 submissions";
+      }
+    }
   }
+  let message: string = "";
+  if (query.item) {
+    message += "Searching for " + query.item;
+  } else {
+    message += "Searching ";
+  }
+  if (query.seeds && query.seeds.length > 0) {
+    message += ` in [${query.seeds.map((seed) => `${seed}s`).join(", ")}] `;
+  }
+
   if (query.category) {
     message += "in category " + query.category;
   }
-  if (query.item) {
-    message += "with item name " + query.item;
-  }
+
   return message;
 };
