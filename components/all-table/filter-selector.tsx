@@ -151,6 +151,9 @@ export default function FilterSelector() {
             ></input>
           </div>
         </div>
+        <div className="w-full text-center text-sm text-zinc-400">
+          ( item name must be exact )
+        </div>
         {errors.itemName?.message && (
           <div className="text-center text-sm font-normal text-red-500">
             {errors.itemName.message}
