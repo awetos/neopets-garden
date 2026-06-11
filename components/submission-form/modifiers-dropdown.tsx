@@ -68,7 +68,7 @@ export function ModifiersDropdown({
   errors,
   setValue,
 }: ModifiersInputProps) {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(true);
 
   return (
     <div>
