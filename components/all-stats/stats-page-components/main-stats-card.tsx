@@ -51,7 +51,7 @@ export default function AllStatsPreview() {
     <div>
       {isLoading && <Loading text="Loading global stats" />}
       {!isLoading && latestStats && (
-        <div className="flex flex-col overflow-hidden rounded-xl bg-amber-100 px-5 py-2 text-center">
+        <div className="flex flex-col overflow-hidden rounded-xl border-2 border-amber-300 bg-amber-100 px-5 py-2 text-center">
           <div className="w-full">
             <span className="font-semibold">Total seeds submitted: </span>
             {latestStats.totalSeeds.toLocaleString()}
