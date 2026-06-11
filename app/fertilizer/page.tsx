@@ -1,5 +1,6 @@
 import Heading from "@/components/about/heading";
 import Recipes from "./sections/recipe";
+import RecipeInfo from "./sections/recipe-info";
 
 export default function AboutFertilizer() {
   return (
@@ -16,6 +17,7 @@ export default function AboutFertilizer() {
         diseases.
       </div>
       <Recipes />
+      <RecipeInfo />
     </div>
   );
 }
