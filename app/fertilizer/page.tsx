@@ -15,6 +15,9 @@ export default function AboutFertilizer() {
         diseases.
       </div>
       <Heading title="Recipe" />
+      <div className="flex flex-row items-center justify-center">
+        <img src="/images/fertilizer/cookingpotkeeper.gif"></img>
+      </div>
       <ol className="list-decimal pl-20">
         <li>
           Go to the <b>Cooking Pot</b> on Mystery Island.
@@ -36,11 +39,11 @@ export default function AboutFertilizer() {
           --or--
           <br></br>
           Combine <b>Basic Compost</b> with{" "}
-          <b className="text-olive-500">Seed</b> to get
+          <b className="text-lime-500">Seed</b> to get
           <b> Basic Fertilizer</b>
         </li>
         <li>
-          Combing <b>Basic Fertilizer</b> with <b>Magic Vial</b> to get
+          Combine <b>Basic Fertilizer</b> with <b>Magic Vial</b> to get
           <b> Miracle Food </b>
         </li>
       </ol>
@@ -66,7 +69,7 @@ export default function AboutFertilizer() {
           used, such as <b>Rotten Berry</b> or <b>Half-eaten Berry</b>
         </p>
         <p>
-          <b className="text-olive-500">Seed</b> can be any seed except
+          <b className="text-lime-500">Seed</b> can be any seed except
           <b> Maraquan seed</b>
         </p>
       </div>
@@ -84,6 +87,20 @@ export default function AboutFertilizer() {
           Dung drops randomly throughout the day in batches, so if you see dung
           in the Rubbish Dump, grab it, and refresh to see if there are any
           more. I've gotten 8 dung at once before.
+        </p>
+      </div>
+      <Heading title="Where to get Berries?" />
+      <div>
+        <div className="flex flex-row items-center justify-center">
+          <img src="/images/fertilizer/med_berry_farmer.gif"></img>
+        </div>
+        <p>
+          You can pick up to 6 berries a day from the Pick your Own minigame by
+          paying the 400np entrance fee.
+        </p>
+        <p>
+          You can buy more berries from other players with the shop wizard. The
+          more common berries will be cheaper.
         </p>
       </div>
     </div>
