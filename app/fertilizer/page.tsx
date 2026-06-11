@@ -8,7 +8,7 @@ import MagicalVial from "./sections/magicalvial";
 export default function AboutFertilizer() {
   return (
     <div>
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex flex-row items-center justify-center gap-2">
         <img src="/images/fertilizer/compost.gif"></img>
         <img src="/images/fertilizer/item_fertilizer_deluxe.gif"></img>
         <img src="/images/fertilizer/item_fertilizer_magical.gif"></img>

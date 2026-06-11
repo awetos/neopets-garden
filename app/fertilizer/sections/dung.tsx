@@ -18,6 +18,12 @@ export default function DungInfo() {
           in the Rubbish Dump, grab it, and refresh to see if there are any
           more. I've gotten 8 dung at once before.
         </p>
+        <div className="flex flex-row items-center justify-center gap-2">
+          <img src="/images/fertilizer/food_dung_pizza.gif"></img>
+          <img src="/images/fertilizer/gross_chewingdung.png"></img>
+          <img src="/images/fertilizer/slush_dung.gif"></img>
+          <img src="/images/fertilizer/pile_of_dung.png"></img>
+        </div>
       </div>
     </>
   );

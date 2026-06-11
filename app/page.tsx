@@ -9,12 +9,18 @@ export default function Home() {
     <>
       <div>
         <div className="flex flex-col">
-          <p></p> Welcome! This is a site to record a crowd sourced database for
-          results of the gardening on Neopets-Classic.
           <p>
-            This project is purely for fun, for practicing backend stuff, and
-            for curiousity.
+            Welcome! This site is for creating a crowd sourced database for
+            results of the gardening on Neopets-Classic. This project is purely
+            for fun, for practicing backend stuff, and for curiousity.
           </p>
+          <p>
+            <b className="text-sm">
+              For the most accurate drop rates, please upload even when drops
+              don't contain fragments or cool items.
+            </b>
+          </p>
+          <p></p>
         </div>
         <div className="my-2 bg-amber-200 pt-2 font-bold">
           <p className="pl-5">Submit your result</p>
