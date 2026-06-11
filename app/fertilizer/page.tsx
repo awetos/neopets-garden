@@ -1,4 +1,5 @@
 import Heading from "@/components/about/heading";
+import Recipes from "./sections/recipe";
 
 export default function AboutFertilizer() {
   return (
@@ -14,7 +15,7 @@ export default function AboutFertilizer() {
         faster or even instantly - skipping any need to water them or prevent
         diseases.
       </div>
-      <Heading title="Recipe" />
+      <Recipes />
     </div>
   );
 }
