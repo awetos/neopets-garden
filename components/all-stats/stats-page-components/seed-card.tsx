@@ -1,8 +1,10 @@
-type SeedCardProps = {
-  seed: string;
-  categories: [category: string, percent: number];
-};
+import { SeedStat } from "@/types/garden-result";
 
-export default function SeedCard() {
-  return <div></div>;
+export default function SeedCard(currentSeed: SeedStat) {
+  return (
+    <div className="bg-amber-100">
+      {currentSeed.seed}{" "}
+      {currentSeed.stats.fragment && `${currentSeed.stats.fragment}`}
+    </div>
+  );
 }

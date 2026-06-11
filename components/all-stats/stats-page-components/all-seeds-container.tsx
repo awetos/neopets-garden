@@ -2,6 +2,7 @@
 import { getSeedsStats } from "@/firebase/get-seed-stats";
 import { SeedStat } from "@/types/garden-result";
 import { useEffect, useState } from "react";
+import SeedCard from "./seed-card";
 
 export default function AllSeedsContainer() {
   const [isLoading, setIsLoading] = useState<true | false>(true);
@@ -22,7 +23,14 @@ export default function AllSeedsContainer() {
     <>
       {isLoading && "Loading"}
       {!isLoading && allSeeds && allSeeds.length > 0 && (
-        <div>{allSeeds.length} seeds loaded</div>
+        <>
+          <div>{allSeeds.length} seeds loaded</div>
+          <div className="grid grid-cols-2 gap-2">
+            {allSeeds.map((seed) => (
+              <SeedCard key={seed.seed} seed={seed.seed} stats={seed.stats} />
+            ))}
+          </div>
+        </>
       )}
     </>
   );
