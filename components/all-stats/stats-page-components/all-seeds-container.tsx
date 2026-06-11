@@ -1,4 +1,5 @@
 "use client";
+import { getSeedsStats } from "@/firebase/get-seed-stats";
 import { SeedStat } from "@/types/garden-result";
 import { useEffect, useState } from "react";
 
@@ -8,7 +9,10 @@ export default function AllSeedsContainer() {
   useEffect(() => {
     async function getSeeds() {
       await new Promise((resolve) => setTimeout(resolve, 2000));
-
+      const seedStatsTemp = await getSeedsStats();
+      if (seedStatsTemp && seedStatsTemp.length > 0) {
+        setAllSeeds(seedStatsTemp);
+      }
       setIsLoading(false);
     }
     getSeeds();
@@ -17,7 +21,9 @@ export default function AllSeedsContainer() {
   return (
     <>
       {isLoading && "Loading"}
-      {!isLoading && "Some seed info here"}
+      {!isLoading && allSeeds && allSeeds.length > 0 && (
+        <div>{allSeeds.length} seeds loaded</div>
+      )}
     </>
   );
 }
