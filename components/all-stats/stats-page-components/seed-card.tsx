@@ -6,10 +6,6 @@ import Image from "next/image";
 
 export default function SeedCard(currentSeed: SeedStat) {
   const [seedPath, setSeedPath] = useState<string>();
-  useEffect(() => {
-    const foundSeed = seeds.find((seed) => seed.name === currentSeed.seed);
-    setSeedPath(foundSeed?.path);
-  }, []);
 
   return (
     <div className="bg-amber-100">
@@ -36,3 +32,12 @@ export default function SeedCard(currentSeed: SeedStat) {
     </div>
   );
 }
+/*export type SeedStat = {
+  seed: string;
+  stats: SeedList;
+};
+
+export type SeedList = {
+  fragments?: number;
+} & Partial<Record<(typeof categories)[number], number>>;
+*/
