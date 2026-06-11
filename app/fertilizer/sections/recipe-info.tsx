@@ -2,7 +2,6 @@ export default function RecipeInfo() {
   return (
     <>
       <div className="space-y-2">
-        <div className="my-5"></div>
         <p>
           <b className="text-amber-500">Dung </b> can be replaced by most items
           with dung in it, like <b>Dung Pizza</b>, <b>Chewing Dung</b>, or{" "}

@@ -11,7 +11,7 @@ export default function Recipes() {
         Go to the <b>Cooking Pot</b> on Mystery Island:
       </div>
 
-      <table className="w-full px-2">
+      <table className="w-full overflow-hidden rounded-b-lg px-2">
         <colgroup>
           <col className="w-1/8" />
           <col className="w-7/8" />
