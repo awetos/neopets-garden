@@ -15,14 +15,16 @@ export default function BasicInfo(
     <div className="flex flex-row">
       <div className="flex w-full flex-1 flex-col p-2">
         <div>
-          <b>Total Seeds:</b> {totalSeeds}
+          <b>Total Seeds: </b>
+          {totalSeeds}
         </div>
         <div>
-          <b>Total Fragments:</b> {fragments}
+          <b>Total Fragments: </b>
+          {fragments}
         </div>
         <div>
           <b>Fragment droprate:</b>
-          {((fragments / totalSeeds) * 100).toFixed(2)}%
+          {` ${((fragments / totalSeeds) * 100).toFixed(2)}`}%
         </div>
       </div>
       <div className="flex flex-1 items-center justify-center">

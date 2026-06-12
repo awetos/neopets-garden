@@ -25,7 +25,10 @@ export default function AllSeedsContainer() {
       {isLoading && <Loading text="Loading Individual Seed Info..."></Loading>}
       {!isLoading && allSeeds && allSeeds.length > 0 && (
         <>
-          <div className="pl-5">
+          <div className="w-full py-5 text-center text-lg font-bold">
+            Click on the seed type to view the breakdown on each category
+          </div>{" "}
+          <div className="text-center">
             {allSeeds.length} seed types in the database
           </div>
           <div className="px-large grid w-full grid-cols-1 gap-2 md:grid-cols-2 md:p-0">

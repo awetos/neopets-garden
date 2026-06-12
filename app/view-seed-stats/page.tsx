@@ -74,26 +74,29 @@ export default function ViewSeedPage() {
           Second is the total seeds of that category. Third is the percentage to 2 decimal places based on total. 
             You may use totalSeeds as the value to help calculate the percent*/}
           {enumeratedCategories && totalSeeds && (
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <th className="border-b p-2 text-left">Category</th>
-                  <th className="border-b p-2 text-right">Seeds</th>
-                  <th className="border-b p-2 text-right">Percentage</th>
-                </tr>
-              </thead>
-              <tbody>
-                {enumeratedCategories.map((category) => (
-                  <tr key={category.category}>
-                    <td className="p-2">{category.category}</td>
-                    <td className="p-2 text-right">{category.count}</td>
-                    <td className="p-2 text-right">
-                      {(category.percentage * 100).toFixed(2)}%
-                    </td>
+            <>
+              <div className="my-5"></div>
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-amber-300">
+                    <th className="pl-2 text-left">Category</th>
+                    <th className="pl-2 text-left">Seeds</th>
+                    <th className="pl-2 text-left">Percentage</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {enumeratedCategories.map((category) => (
+                    <tr key={category.category}>
+                      <td className="p-2 text-left">{category.category}</td>
+                      <td className="p-2 text-left">{category.count}</td>
+                      <td className="p-2 text-left">
+                        {(category.percentage * 100).toFixed(2)}%
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
           )}
         </>
       )}
