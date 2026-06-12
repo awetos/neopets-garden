@@ -18,6 +18,10 @@ export default function Home() {
             <b className="text-sm">
               For the most accurate drop rates, please upload even when drops
               don't contain fragments or cool items.
+              <br></br>
+            </b>
+            <b className="text-sm text-green-800">
+              Seeds go in the gardening category.
             </b>
           </p>
           <p></p>
