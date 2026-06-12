@@ -8,6 +8,7 @@ import Loading from "@/components/loading";
 import Heading from "@/components/about/heading";
 import { SeedList } from "@/types/garden-submission";
 import { getSeedStatsBySeed } from "@/firebase/get-seed-stats";
+import BasicInfo from "./basic-info";
 
 export default function ViewSeedPage() {
   const searchParams = useSearchParams();
@@ -59,22 +60,48 @@ export default function ViewSeedPage() {
       {!isLoading && (
         <>
           <Heading title={`Viewing stats on ${seedCategory}`} />
-          <p>{seedCategory}</p>
-          {!seedCategoryInfo && <p>No info found on this category.</p>}
-          <br />
-          {seedCategoryInfo &&
-            (seedCategoryInfo.fragments
-              ? "0 fragments in this seed"
-              : `${seedCategoryInfo.fragments} fragments in this seed`)}
-          <br />
-          {totalSeeds ? `${totalSeeds} total seeds` : "no total"}
+          {seedCategory &&
+            seedPath &&
+            totalSeeds &&
+            BasicInfo(
+              seedCategory,
+              totalSeeds,
+              seedPath,
+              seedCategoryInfo?.fragments ?? 0,
+            )}
+          {/*Create a 3 column table by mapping our enumeratedCategories. 
+          for each row (SortedCategory item in enumeratedCategories) the first column is the category. 
+          Second is the total seeds of that category. Third is the percentage to 2 decimal places based on total. 
+            You may use totalSeeds as the value to help calculate the percent*/}
+          {enumeratedCategories && totalSeeds && (
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <th className="border-b p-2 text-left">Category</th>
+                  <th className="border-b p-2 text-right">Seeds</th>
+                  <th className="border-b p-2 text-right">Percentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {enumeratedCategories.map((category) => (
+                  <tr key={category.category}>
+                    <td className="p-2">{category.category}</td>
+                    <td className="p-2 text-right">{category.count}</td>
+                    <td className="p-2 text-right">
+                      {(category.percentage * 100).toFixed(2)}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </>
       )}
     </div>
   );
 }
 //iterate through all the categories and add the sum of the number
-function getTotalSeeds(currentSeed: SeedList): number {
+export function getTotalSeeds(currentSeed: SeedList): number {
   const { fragments, ...categoryStats } = currentSeed;
 
   return Object.values(categoryStats).reduce(
@@ -84,13 +111,13 @@ function getTotalSeeds(currentSeed: SeedList): number {
 }
 
 //returns the category and count for each category sorted by most popular.
-type SortedCategory = {
+export type SortedCategory = {
   category: string;
   count: number;
   percentage: number;
 };
 
-function getSortedCategories(
+export function getSortedCategories(
   currentSeed: SeedList,
   totalSeeds: number,
 ): SortedCategory[] {
