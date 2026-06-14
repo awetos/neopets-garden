@@ -10,18 +10,16 @@ export default function Home() {
     <>
       <div>
         <div className="flex flex-col">
-          <p>
-            Welcome! This site is for creating a crowd sourced database for
-            results of the gardening on results of the gardening on{" "}
-            <Link
-              className="font-bold text-amber-600 hover:underline"
-              href="https://neopetsclassic.com/"
-            >
-              Neopets-Classic
-            </Link>{" "}
-            - a fanmade rendition of the 2000-2004 era of Neopets. This project
-            is purely for fun, for practicing backend stuff, and for curiosity.
-          </p>
+          Welcome! This site is for creating a crowd sourced database for
+          results of the gardening on results of the gardening on{" "}
+          <Link
+            className="font-bold text-amber-600 hover:underline"
+            href="https://neopetsclassic.com/"
+          >
+            Neopets-Classic
+          </Link>{" "}
+          - a fanmade rendition of the 2000-2004 era of Neopets. This project is
+          purely for fun, for practicing backend stuff, and for curiosity.
           <p>
             <b className="text-sm">
               For the most accurate drop rates, please upload even when drops
