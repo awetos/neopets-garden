@@ -33,9 +33,10 @@ export default function RootLayout({
       <body>
         <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
           <Navbar />
-          <div className="bg-[url('/images/background/background_temp_2.png')] bg-cover bg-fixed bg-position-[50%_95%]">
-            <div className="md:p-large mx-0 w-full max-w-full border-0 bg-amber-50/90 p-2 md:mx-auto md:my-2 md:max-w-3xl md:border-2 md:border-black">
-              <main>{children}</main>
+
+          <div className="flex min-h-0 w-full flex-col items-center bg-[url('/images/background/background_temp_2.png')] bg-cover bg-fixed bg-[50%_95%]">
+            <div className="md:p-large m-0 flex w-full flex-1 border-0 bg-amber-50/90 p-2 md:mx-auto md:my-2 md:max-w-3xl md:border-2 md:border-black">
+              <main className="w-full">{children}</main>
             </div>
           </div>
           <Footer />
