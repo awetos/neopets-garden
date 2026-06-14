@@ -1,3 +1,6 @@
+## Neopets-Garden is a database hosted on Neocities to record the results of gardening on the fan-game Neopets Classic
+It is live here: [Neocities Link](https://neopets-garden-info.neocities.org/) 
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
