@@ -5,6 +5,24 @@ export default function PrivacyPolicy() {
   return (
     <div>
       <Heading title="Privacy Policy" />
+      <div>
+        All submissions are anonymous. Only the gardening results are collected.
+        You can see the exact information collected in{" "}
+        <Link
+          className="font-bold text-amber-600 hover:underline"
+          href="https://github.com/awetos/neopets-garden/blob/master/components/submission-form/submission-form.tsx"
+        >
+          submission form
+        </Link>{" "}
+        the and the{" "}
+        <Link
+          className="font-bold text-amber-600 hover:underline"
+          href="https://github.com/awetos/neopets-garden/blob/master/firebase/upload/upload-submission.ts"
+        >
+          upload to Firebase function
+        </Link>
+        .
+      </div>
     </div>
   );
 }
