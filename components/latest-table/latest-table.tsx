@@ -38,7 +38,7 @@ export default function LatestTable() {
   }, [refreshKey]);
 
   return (
-    <div>
+    <div className="p-2">
       <table className="w-full">
         <colgroup>
           <col className="w-2/7" />

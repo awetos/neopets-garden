@@ -112,7 +112,7 @@ export function ModifiersDropdown({
               <input
                 autoComplete="off"
                 type="text"
-                className="w-[80%] border-2 border-zinc-500 bg-white font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
+                className="w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.0")}
               />
@@ -124,7 +124,7 @@ export function ModifiersDropdown({
               <input
                 autoComplete="off"
                 type="text"
-                className="w-[80%] border-2 border-zinc-500 bg-white font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
+                className="w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.1")}
               />{" "}
@@ -136,7 +136,7 @@ export function ModifiersDropdown({
               <input
                 autoComplete="off"
                 type="text"
-                className="w-[80%] border-2 border-zinc-500 bg-white font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
+                className="w-[80%] border-2 border-zinc-500 bg-white px-2 font-normal disabled:bg-zinc-200 disabled:text-gray-600 md:w-full"
                 disabled={isSubmitting}
                 {...register("modifiers.2")}
               />
