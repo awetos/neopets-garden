@@ -3,6 +3,7 @@ import LatestTable from "@/components/latest-table/latest-table";
 import { Suspense } from "react";
 import AllStatsPreview from "@/components/all-stats/stats-preview";
 import Loading from "@/components/loading";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -11,8 +12,15 @@ export default function Home() {
         <div className="flex flex-col">
           <p>
             Welcome! This site is for creating a crowd sourced database for
-            results of the gardening on Neopets-Classic. This project is purely
-            for fun, for practicing backend stuff, and for curiousity.
+            results of the gardening on results of the gardening on{" "}
+            <Link
+              className="font-bold text-amber-600 hover:underline"
+              href="https://neopetsclassic.com/"
+            >
+              Neopets-Classic
+            </Link>{" "}
+            - a fanmade rendition of the 2000-2004 era of Neopets. This project
+            is purely for fun, for practicing backend stuff, and for curiosity.
           </p>
           <p>
             <b className="text-sm">

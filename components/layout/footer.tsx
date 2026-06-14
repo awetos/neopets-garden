@@ -13,6 +13,11 @@ export default function Footer() {
           Contact
         </div>
       </Link>
+      <Link href="/privacy-policy">
+        <div className="text-amber-800 hover:cursor-pointer hover:underline">
+          Open Source
+        </div>
+      </Link>
     </div>
   );
 }
