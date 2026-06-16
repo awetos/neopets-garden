@@ -12,7 +12,7 @@ export default function Home() {
         <div className="flex flex-col">
           <p>
             Welcome! This site is for creating a crowd sourced database for
-            results of the gardening on results of the gardening on{" "}
+            results of the gardening on{" "}
             <Link
               className="font-bold text-amber-600 hover:underline"
               href="https://neopetsclassic.com/"
